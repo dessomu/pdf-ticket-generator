@@ -73,7 +73,7 @@ const mapping = {
       y: 485,
       fontSize: 7.5,
       font: "regular",
-      width: 70,
+      width: 50,
       height: 8,
     },
     returnFlightNo: {
@@ -81,7 +81,7 @@ const mapping = {
       y: 316,
       fontSize: 7.5,
       font: "regular",
-      width: 60,
+      width: 69,
       height: 8,
     },
     returnDate: {
