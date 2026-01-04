@@ -174,10 +174,21 @@ function App() {
       setForm({
         passengerName: "",
         pnr: "",
-        destination: "",
-        flightNo: "",
+        pdfName: "",
+
         bookingDate: "",
-        journeyDate: "",
+        bookingTime: "",
+
+        // Departure flight
+        departureBoardingDate: "",
+        departureLandingDate: "",
+
+        // Return flight
+        returnBoardingDate: "",
+        returnLandingDate: "",
+
+        departureFlightNo: "",
+        returnFlightNo: "",
         barcodeExtra: "",
       });
     } catch (err) {
