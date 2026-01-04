@@ -15,6 +15,7 @@ function App() {
   const [form, setForm] = useState({
     passengerName: "",
     pnr: "",
+    pdfName: "",
 
     bookingDate: "",
     bookingTime: "",
@@ -162,7 +163,7 @@ function App() {
 
       const a = document.createElement("a");
       a.href = url;
-      a.download = "thailand-indigo-ticket.pdf";
+      a.download = `${form.pdfName}.pdf`;
       a.click();
 
       URL.revokeObjectURL(url);
@@ -225,6 +226,10 @@ function App() {
           onChange={handleChange}
         />
       </label>
+      <label>
+        PDF Name
+        <input name="pdfName" value={form.pdfName} onChange={handleChange} />
+      </label>
 
       <hr />
 
@@ -246,6 +251,15 @@ function App() {
           type="date"
           name="departureLandingDate"
           value={form.departureLandingDate}
+          onChange={handleChange}
+        />
+      </label>
+      <label>
+        Departure Flight No.
+        <input
+          name="departureFlightNo"
+          placeholder="e.g. 6E1054 (A320) "
+          value={form.departureFlightNo}
           onChange={handleChange}
         />
       </label>
@@ -274,6 +288,16 @@ function App() {
         />
       </label>
 
+      <label>
+        Return Flight No.
+        <input
+          name="returnFlightNo"
+          placeholder="e.g. 6E1057 (A320) "
+          value={form.returnFlightNo}
+          onChange={handleChange}
+        />
+      </label>
+
       {/* Option B – template controlled */}
       {template.config.barcode.enabled && (
         <>
@@ -283,24 +307,6 @@ function App() {
               name="barcodeExtra"
               placeholder="e.g. 0000311Y000Y00000 009BXTOBCP5DBTQ"
               value={form.barcodeExtra}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Departure Flight No.
-            <input
-              name="departureFlightNo"
-              placeholder="e.g. 6E1054 (A320) "
-              value={form.departureFlightNo}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Return Flight No.
-            <input
-              name="returnFlightNo"
-              placeholder="e.g. 6E1057 (A320) "
-              value={form.returnFlightNo}
               onChange={handleChange}
             />
           </label>
