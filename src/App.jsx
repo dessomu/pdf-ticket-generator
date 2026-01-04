@@ -92,6 +92,7 @@ function App() {
         surname,
         name: firstName,
         pnr: form.pnr,
+        source: template.config.barcode.legs.return.destination,
         destination: template.config.barcode.legs.departure.destination,
         flightNo: form.departureFlightNo,
         suffix: form.barcodeExtra,
@@ -102,6 +103,7 @@ function App() {
         surname,
         name: firstName,
         pnr: form.pnr,
+        source: template.config.barcode.legs.departure.destination,
         destination: template.config.barcode.legs.return.destination,
         flightNo: form.returnFlightNo,
         suffix: form.barcodeExtra,
@@ -134,10 +136,10 @@ function App() {
         )}`,
 
         // Flight No
-        departureFlightNo: form.departureFlightNo,
+        departureFlightNo: `${form.departureFlightNo} ( A320 )`,
         departureDate: formatFlightDate(form.departureBoardingDate),
 
-        returnFlightNo: form.returnFlightNo,
+        returnFlightNo: `${form.returnFlightNo} ( A320 )`,
         returnDate: formatFlightDate(form.returnBoardingDate),
 
         pnr: form.pnr,

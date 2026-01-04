@@ -1,17 +1,19 @@
 // src/utils/name.js
 
-export function splitName(fullName = "") {
-  const parts = fullName.trim().split(/\s+/);
-
-  if (parts.length === 1) {
-    return {
-      firstName: parts[0],
-      surname: parts[0],
-    };
+export function splitName(fullName) {
+  if (!fullName) {
+    return { firstName: "", surname: "" };
   }
 
-  return {
-    surname: parts[parts.length - 1],
-    firstName: parts.slice(0, -1).join(" "),
-  };
+  // 1️⃣ Normalize & remove common titles (case-insensitive)
+  const cleaned = fullName.trim().replace(/^(mr|mrs|ms|miss|dr)\.?\s+/i, "");
+
+  // 2️⃣ Split by spaces
+  const parts = cleaned.split(/\s+/);
+
+  // 3️⃣ Extract names
+  const firstName = parts[0] || "";
+  const surname = parts.length > 1 ? parts.slice(1).join(" ") : "";
+
+  return { firstName, surname };
 }

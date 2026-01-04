@@ -4,6 +4,7 @@ export function buildBarcodeText({
   surname,
   name,
   pnr,
+  source,
   destination,
   flightNo,
   suffix,
@@ -12,7 +13,7 @@ export function buildBarcodeText({
     throw new Error("Surname and Name are required for barcode generation");
   }
 
-  const base = `M1${surname}/${name} ${pnr}${destination}${flightNo}`;
+  const base = `M1${surname}/${name} ${pnr} ${source}${destination}${flightNo}`;
 
   return suffix?.trim() ? `${base} ${suffix.trim()}` : base;
 }
