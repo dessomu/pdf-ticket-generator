@@ -155,6 +155,7 @@ export default function TicketFormPage() {
             fields: pdfFields,
             barcodes: barcodeImages,
             debug: showGrid,
+            pdfName: flightForm.pdfName,
         });
 
         // Download

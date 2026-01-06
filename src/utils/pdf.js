@@ -24,9 +24,11 @@ export async function generatePdf({
   departureBarcodeImage,
   returnBarcodeImage,
   debug = false,
+  pdfName,
 }) {
   const pdfBytes = await fetch(templatePdf).then((res) => res.arrayBuffer());
   const pdfDoc = await PDFDocument.load(pdfBytes);
+  pdfDoc.setTitle(pdfName);
 
   const pages = pdfDoc.getPages();
   const regularFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
