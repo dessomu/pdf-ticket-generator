@@ -166,6 +166,23 @@ export default function TicketFormPage() {
         a.click();
         URL.revokeObjectURL(url);
 
+        // Reset Form
+        setFlightForm({
+            bookingDate: "",
+            bookingTime: "",
+            pnr: "",
+            pdfName: "ticket",
+            departureBoardingDate: "",
+            departureLandingDate: "",
+            departureFlightNo: "",
+            returnBoardingDate: "",
+            returnLandingDate: "",
+            returnFlightNo: "",
+            barcodeExtra: "",
+            bookingId: "",
+        });
+        setPassengers(Array(paxCount).fill(null).map(() => ({ passengerName: "" })));
+
     } catch (err) {
         console.error(err);
         alert("Failed to generate PDF. See console.");
