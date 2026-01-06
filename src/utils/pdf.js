@@ -1,6 +1,7 @@
 // src/utils/pdf.js
 
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
+import { drawDebugGrid } from "../templates/checkerBoxCreator";
 
 function drawWhiteRect(page, { x, y, width, height }) {
   page.drawRectangle({
@@ -16,13 +17,18 @@ export async function generatePdf({
   templatePdf,
   mapping,
   fields,
+  // Dictionary of { key: base64ImageString }
+  // e.g. { departure: "...", return: "...", departure_2: "..." }
+  barcodes, 
+  // Legacy support fallback (optional, can remove if we update call sites)
   departureBarcodeImage,
   returnBarcodeImage,
+  debug = false,
 }) {
   const pdfBytes = await fetch(templatePdf).then((res) => res.arrayBuffer());
   const pdfDoc = await PDFDocument.load(pdfBytes);
 
-  const page = pdfDoc.getPages()[0];
+  const pages = pdfDoc.getPages();
   const regularFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
   const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
@@ -31,45 +37,69 @@ export async function generatePdf({
     const pos = mapping.fields[key];
     if (!pos || !value) return;
 
+    // Default to page 0 if not specified
+    const pageIdx = pos.pageIndex || 0; 
+    const targetPage = pages[pageIdx];
+    
+    if (!targetPage) {
+        console.warn(`Page index ${pageIdx} not found for field ${key}`);
+        return;
+    }
+
     // 1. Mask old content
-    drawWhiteRect(page, {
+    drawWhiteRect(targetPage, {
       x: pos.x - 2,
       y: pos.y - 2,
       width: pos.width + 2,
       height: pos.height + 2,
+      color:pos.backGround || rgb(1, 1, 1),
     });
 
     // 2. Draw new text
-    page.drawText(String(value), {
+    targetPage.drawText(String(value), {
       x: pos.x,
       y: pos.y,
       size: pos.fontSize,
       font: pos.font === "regular" ? regularFont : boldFont,
+      color: pos.color || rgb(0, 0, 0),
     });
   });
 
-  // Draw barcode
+  // Prepare barcode map
+  const finalBarcodes = { ...barcodes };
+  if (departureBarcodeImage && !finalBarcodes.departure) finalBarcodes.departure = departureBarcodeImage;
+  if (returnBarcodeImage && !finalBarcodes.return) finalBarcodes.return = returnBarcodeImage;
 
-  // Departure barcode
-  drawWhiteRect(page, {
-    x: mapping.barcodes.departure.x,
-    y: mapping.barcodes.departure.y,
-    width: mapping.barcodes.departure.width,
-    height: mapping.barcodes.departure.height,
-  });
+  // Draw barcodes
+  if (mapping.barcodes) {
+    for (const [key, imageData] of Object.entries(finalBarcodes)) {
+        const coords = mapping.barcodes[key];
+        if (!coords || !imageData) continue;
 
-  const depPng = await pdfDoc.embedPng(departureBarcodeImage);
-  page.drawImage(depPng, mapping.barcodes.departure);
+        const pageIdx = coords.pageIndex || 0;
+        const targetPage = pages[pageIdx];
 
-  // Return barcode
-  drawWhiteRect(page, {
-    x: mapping.barcodes.return.x,
-    y: mapping.barcodes.return.y,
-    width: mapping.barcodes.return.width,
-    height: mapping.barcodes.return.height,
-  });
-  const retPng = await pdfDoc.embedPng(returnBarcodeImage);
-  page.drawImage(retPng, mapping.barcodes.return);
+        if (!targetPage) {
+            console.warn(`Page index ${pageIdx} not found for barcode ${key}`);
+            continue;
+        }
+
+        drawWhiteRect(targetPage, {
+            x: coords.x,
+            y: coords.y,
+            width: coords.width,
+            height: coords.height,
+        });
+
+        const pngImage = await pdfDoc.embedPng(imageData);
+        targetPage.drawImage(pngImage, coords); // pdf-lib drawImage ignores unknown props in coords usually, or we should verify
+    }
+  }
+  
+  // Debug: Draw grid
+  if (debug) {
+      pages.forEach(p => drawDebugGrid(p));
+  }
 
   return await pdfDoc.save();
 }

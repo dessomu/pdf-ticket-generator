@@ -17,3 +17,8 @@ export function splitName(fullName) {
 
   return { firstName, surname };
 }
+
+export function cleanName(fullName) {
+   const cleaned = fullName.trim().replace(/^(mr|mrs|ms|miss|dr)\.?\s+/i, "");
+   return cleaned;
+}
