@@ -13,6 +13,7 @@ function drawWhiteRect(page, { x, y, width, height }) {
   });
 }
 
+
 export async function generatePdf({
   templatePdf,
   mapping,
@@ -34,10 +35,15 @@ export async function generatePdf({
   const regularFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
   const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
+
+
   // Draw text fields
   Object.entries(fields).forEach(([key, value]) => {
     const pos = mapping.fields[key];
     if (!pos || !value) return;
+
+const textWidth = regularFont.widthOfTextAtSize(value, pos.fontSize);
+
 
     // Default to page 0 if not specified
     const pageIdx = pos.pageIndex || 0; 
@@ -59,7 +65,7 @@ export async function generatePdf({
 
     // 2. Draw new text
     targetPage.drawText(String(value), {
-      x: pos.x,
+      x:pos.textAlignRight ? pos.x + pos.width - textWidth : pos.x,
       y: pos.y,
       size: pos.fontSize,
       font: pos.font === "regular" ? regularFont : boldFont,

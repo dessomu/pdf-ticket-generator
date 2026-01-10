@@ -1,5 +1,6 @@
 import { splitName,cleanName } from "../utils/name";
 import { formatDate, formatFlightDate, formatJourneyDate,formatMMTJourneyDate,formatMMTFlightDate } from "../utils/date";
+import { formatName } from "../utils/name";
 
 /**
  * Maps form data to PDF fields for Indigo templates.
@@ -12,6 +13,7 @@ export function mapIndigoData(form, passengers) {
     const pdfFields = {
         bookingTimeString: `* Date of Booking ${formatDate(form.bookingDate)}, ${form.bookingTime} `,
         pnr: form.pnr,
+        passengerType:"Adult",
         
         // Flight Dates
         departureBoardingDate: `23:30 hrs, ${formatJourneyDate(form.departureBoardingDate)}`,
@@ -19,14 +21,14 @@ export function mapIndigoData(form, passengers) {
         returnBoardingDate: `06:45 hrs, ${formatJourneyDate(form.returnBoardingDate)}`,
         returnLandingDate: `08:00 hrs, ${formatJourneyDate(form.returnLandingDate)}`,
         
-        departureFlightNo: `${form.departureFlightNo} ( A320 )`,
+        departureFlightNo: `${form.departureFlightNo}`,
         departureDate: formatFlightDate(form.departureBoardingDate),
         
-        returnFlightNo: `${form.returnFlightNo} ( A320 )`,
+        returnFlightNo: `${form.returnFlightNo}`,
         returnDate: formatFlightDate(form.returnBoardingDate),
         
         // Pax 1
-        passengerName: firstPax.passengerName, 
+        passengerName: formatName(firstPax.passengerName), 
     };
 
     // Add additional passengers dynamically
@@ -34,36 +36,22 @@ export function mapIndigoData(form, passengers) {
         if (i === 0) return; 
         
         // Name mapping
-        pdfFields[`passengerName_${i + 1}`] = pax.passengerName;
+        pdfFields[`passengerName_${i + 1}`] = formatName(pax.passengerName);
     });
 
     return pdfFields;
 }
 
-/**
- * Maps form data to PDF fields for MMT Malaysia templates.
- */
-export function mapMMTData(form, passengers) {
-    // Reuse Indigo logic for common fields? No, MMT has different field names/formats sometimes.
-    // e.g. bookingId vs bookingTimeString usage.
-    
-    // MMT Base Fields
-    const firstPax = passengers[0];
-    const cleanedPaxName = cleanName(firstPax.passengerName);
 
-    const age = firstPax.age;
-    const type = age >= 12 ? "Adult" : "Child";
+// Maps form data to PDF fields for MMT Malaysia templates.
+export function mapMMTData(form, passengers) {
     
     const pdfFields = {
-        // MMT specific fields
-        bookingInfoString:`Booking ID:${form.bookingId} (Booked on ${formatDate(form.bookingDate)})`,
-        // MMT maps bookingTime/bookingTimeString differently or not at all (hidden in form)
-        departurePassengerName:cleanedPaxName,
-        returnPassengerName:cleanedPaxName,
-
-        departurePnr: form.pnr, 
-        returnPnr: form.pnr, 
-        // Flight Dates (Same format as Indigo for now?)
+        // MMT specific fields (Page 1 / Header)
+        bookingInfoString:`Booking ID:${form.bookingId}, (Booked on ${formatDate(form.bookingDate)})`,
+        bookingType: "Flight Ticket (Round trip)",
+        
+        // Common flight details (same for all passengers)
         departureBoardingDate: formatMMTJourneyDate(form.departureBoardingDate),
         departureLandingDate: formatMMTJourneyDate(form.departureLandingDate),
         returnBoardingDate: formatMMTJourneyDate(form.returnBoardingDate),
@@ -72,33 +60,29 @@ export function mapMMTData(form, passengers) {
         departureDate: formatMMTFlightDate(form.departureBoardingDate),
         returnDate: formatMMTFlightDate(form.returnBoardingDate),
         
-        departureTicketNumber: firstPax.eTicketNumber,
-        returnTicketNumber: firstPax.eTicketNumber,
-
-        departureTravellerName:firstPax.passengerName.toUpperCase(),
-        departureTravellerType:type,
-        returnTravellerName:firstPax.passengerName.toUpperCase(),
-        returnTravellerType:type,
+        departurePnr: form.pnr, 
+        returnPnr: form.pnr, 
     };
     
-    const mapNameWithAge = (pax) => {
-         if (pax.age) {
-             const ageNum = parseInt(pax.age);
-             const type = ageNum >= 12 ? "Adult" : "Child";
-             return `${pax.passengerName} (${type})`;
-         }
-         return pax.passengerName;
-    };
-
-    // Pax 1
-    pdfFields.passengerName = mapNameWithAge(firstPax);
-
-    // Add additional passengers dynamically
+    // Generate passenger-specific fields
     passengers.forEach((pax, i) => {
-        if (i === 0) return; // handled above
+        const idx = i + 1;
+        const suffix = i === 0 ? "" : `_${idx}`; // e.g., "", "_2", "_3"
         
-        pdfFields[`passengerName_${i + 1}`] = mapNameWithAge(pax);
-        pdfFields[`eTicketNumber_${i + 1}`] = pax.eTicketNumber;
+        const cleanedName = cleanName(pax.passengerName);
+        const type = "Adult";
+        
+        // Boarding Pass Details
+        pdfFields[`departureTravellerName${suffix}`] = pax.passengerName.toUpperCase();
+        pdfFields[`departureTravellerType${suffix}`] = type;
+        pdfFields[`departureTicketNumber${suffix}`] = pax.eTicketNumber;
+        
+        pdfFields[`returnTravellerName${suffix}`] = pax.passengerName.toUpperCase();
+        pdfFields[`returnTravellerType${suffix}`] = type;
+        pdfFields[`returnTicketNumber${suffix}`] = pax.eTicketNumber;
+        
+        pdfFields[`departurePassengerName${suffix}`] = formatName(cleanedName);
+        pdfFields[`returnPassengerName${suffix}`] = formatName(cleanedName);
     });
 
     return pdfFields;

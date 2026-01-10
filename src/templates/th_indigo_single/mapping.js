@@ -23,8 +23,16 @@ const mapping = {
       y: 607.3,
       fontSize: 12,
       font: "bold",
-      width: 130,
+      width: 225,
       height: 12,
+    },
+    passengerType: {
+      x: 285,
+      y: 609.5,
+      fontSize: 9,
+      font: "bold",
+      width: 20,
+      height: 10,
     },
 
     departureBoardingDate: {

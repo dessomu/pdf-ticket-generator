@@ -16,8 +16,8 @@ const mapping = {
     departurePnr: { x: 108.5, y: 734,pageIndex:1, font: "regular", fontSize: 11,color:COLORS.darkGrey, width: 40, height: 12 },
     returnPnr: { x: 108.5, y: 358,pageIndex:1, font: "regular", fontSize: 11,color:COLORS.darkGrey, width: 40, height: 12 },
 
-    departurePassengerName: { x: 50, y: 552, fontSize: 12.3, font: "regular",color:COLORS.darkGrey, width: 280, height: 13 },
-    returnPassengerName: { x: 50, y: 288, fontSize: 12.3, font: "regular",color:COLORS.darkGrey, width: 280, height: 13 },
+    departurePassengerName: { x: 50, y: 551.5, fontSize: 12.3, font: "regular",color:COLORS.darkGrey, width: 280, height: 13 },
+    returnPassengerName: { x: 50, y: 287, fontSize: 12.3, font: "regular",color:COLORS.darkGrey, width: 280, height: 13 },
 
     departureBoardingDate: { x: 211.5, y: 754,pageIndex:1, fontSize: 8, font: "regular",color:COLORS.semiDarkerGrey, width: 50, height: 9.8 },
     departureLandingDate: { x: 490, y: 754,pageIndex:1, fontSize: 8, font: "regular",color:COLORS.semiDarkerGrey, width: 50, height: 9.8 },

@@ -22,3 +22,11 @@ export function cleanName(fullName) {
    const cleaned = fullName.trim().replace(/^(mr|mrs|ms|miss|dr)\.?\s+/i, "");
    return cleaned;
 }
+
+export function formatName(fullName) {
+  return fullName
+    .toLowerCase()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}

@@ -1,46 +1,79 @@
+import { COLORS } from "../../utils/pdfColors";
+
 const mapping = {
   fields: {
-    // bookingTimeString: { x: 113.2, y: 708.6, fontSize: 8, font: "regular", width: 150, height: 7 },
-    bookingDate: { x: 113.2, y: 708.6, fontSize: 10, font: "regular", width: 100, height: 10 },
-    bookingId: { x: 32.0, y: 650, font: "regular", fontSize: 10, width: 36, height: 10 }, // PLACHOLDER Y
-    eTicketNumber: { x: 32.0, y: 630, font: "regular", fontSize: 10, width: 36, height: 10 }, // PLACEHOLDER Y
-    pnr: { x: 32.0, y: 669, font: "regular", fontSize: 10, width: 36, height: 10 },
+    // --- FROM MMT SINGLE MAPPING (BASE) ---
+    bookingInfoString: { x: 295.4, y: 733, font: "regular", fontSize: 8.5,color:COLORS.semiDarkerGrey, width: 257, height: 9.5},
+
+    // Page 1 (BP 1) fields
+    departureTicketNumber: { x: 433, y: 582,backGround:COLORS.backGroundGrey,pageIndex:1, font: "regular",color:COLORS.semiDarkGrey, fontSize: 10, width: 85, height: 10 }, 
+    returnTicketNumber: { x: 433.5, y:210,backGround:COLORS.backGroundGrey,pageIndex:1, font: "regular",color:COLORS.semiDarkGrey, fontSize: 10, width: 85, height: 10 }, 
+
+    departureTravellerName: { x: 50, y: 582,backGround:COLORS.backGroundGrey,pageIndex:1, font: "regular", fontSize: 9.5, width: 200, height: 12 }, 
+    departureTravellerType: { x: 250, y: 582,backGround:COLORS.backGroundGrey,pageIndex:1, color:COLORS.grey, font: "regular", fontSize: 9.5, width: 20, height: 12 },
+
+    returnTravellerName: { x: 50, y:210,backGround:COLORS.backGroundGrey,pageIndex:1, font: "regular", fontSize: 9.5, width: 230, height: 10 }, 
+    returnTravellerType: { x: 250, y:210,backGround:COLORS.backGroundGrey,pageIndex:1, color:COLORS.grey, font: "regular", fontSize: 9.5, width: 20, height: 10 }, 
+
+    departurePnr: { x: 107, y: 722,pageIndex:1, font: "regular", fontSize: 11,color:COLORS.darkGrey, width: 47, height: 12 },
+    returnPnr: { x: 107, y: 346,pageIndex:1, font: "regular", fontSize: 11,color:COLORS.darkGrey, width: 47, height: 12 },
+
+    // Page 0 (Summary) - Pax 1
+    departurePassengerName: { x: 50, y: 636, fontSize: 10, font: "regular",color:COLORS.darkGrey, width: 280, height: 13 },
+    returnPassengerName: { x: 50, y: 375, fontSize: 10, font: "regular",color:COLORS.darkGrey, width: 280, height: 13 },
+
+    // BP 1 Dates
+    departureBoardingDate: { x: 211.5, y: 740,pageIndex:1, fontSize: 9, font: "regular",color:COLORS.semiDarkerGrey, width: 55, height: 9.8 },
+    departureLandingDate: { x: 490, y: 740,pageIndex:1, fontSize: 9, font: "regular",color:COLORS.semiDarkerGrey, width: 55, height: 9.8 },
+
+    returnBoardingDate: { x: 211.5, y: 368,pageIndex:1, fontSize: 9, font: "regular",color:COLORS.semiDarkerGrey, width: 55, height: 9.5 },
+    returnLandingDate: { x: 490, y: 368,pageIndex:1, fontSize: 9, font: "regular",color:COLORS.semiDarkerGrey, width: 55, height: 9.5 },
     
-    // Pax 1
-    passengerName: { x: 39, y: 607.3, fontSize: 12, font: "bold", width: 130, height: 12 },
+    // Page 0 Flight Details
+    departureDate: { x: 58, y: 137.3, fontSize: 9, font: "regular",color:COLORS.semiDarkerGrey, width: 80, height: 9 },
+    returnDate: { x: 58, y: 458,pageIndex:1, fontSize: 9, font: "regular",color:COLORS.semiDarkerGrey, width: 72, height: 9 },
+  
+    // --- PASSENGER 2 ---
+    departurePassengerName_2: { x: 50, y: 575, fontSize: 10, font: "regular",color:COLORS.semiDarkerGrey, width: 280, height: 13 },
+    returnPassengerName_2: { x: 50, y: 316.7, fontSize: 10, font: "regular",color:COLORS.semiDarkerGrey, width: 280, height: 13 },
     
-    // Pax 2
-    passengerName_2: { x: 39, y: 592.3, fontSize: 12, font: "bold", width: 130, height: 12 },
+    departureTicketNumber_2: { x: 433, y: 560,backGround:COLORS.backGroundGrey,pageIndex:1, font: "regular",color:COLORS.semiDarkGrey, fontSize: 10, width: 85, height: 10 }, 
+    returnTicketNumber_2: { x: 433.5, y:186,backGround:COLORS.backGroundGrey,pageIndex:1, font: "regular",color:COLORS.semiDarkGrey, fontSize: 10, width: 85, height: 10 }, 
 
-    // Pax 3
-    passengerName_3: { x: 39, y: 577.3, fontSize: 12, font: "bold", width: 130, height: 12 },
+    departureTravellerName_2: { x: 50, y: 560,backGround:COLORS.backGroundGrey,pageIndex:1, font: "regular", fontSize: 10, width: 200, height: 12 }, 
+    departureTravellerType_2: { x: 250, y: 560,backGround:COLORS.backGroundGrey,pageIndex:1, color:COLORS.grey, font: "regular", fontSize: 10, width: 20, height: 12 },
 
-    // E-Tickets (derived offset -15 per row)
-    eTicketNumber_2: { x: 32.0, y: 615, font: "regular", fontSize: 10, width: 36, height: 10 },
-    eTicketNumber_3: { x: 32.0, y: 600, font: "regular", fontSize: 10, width: 36, height: 10 },
+    returnTravellerName_2: { x: 50, y:186,backGround:COLORS.backGroundGrey,pageIndex:1, font: "regular", fontSize: 10, width: 230, height: 10 }, 
+    returnTravellerType_2: { x: 250, y:186,backGround:COLORS.backGroundGrey,pageIndex:1, color:COLORS.grey, font: "regular", fontSize: 10, width: 20, height: 10 }, 
 
-
-    departureBoardingDate: { x: 43.56, y: 360, fontSize: 9.8, font: "bold", width: 120, height: 9 },
-    departureLandingDate: { x: 461, y: 360, fontSize: 10, font: "bold", width: 120, height: 9.8 },
-
-    returnBoardingDate: { x: 43.56, y: 203.09, fontSize: 9.8, font: "bold", width: 120, height: 9.5 },
-    returnLandingDate: { x: 347.71, y: 203.09, fontSize: 9.8, font: "bold", width: 120, height: 9.5 },
+    // --- PASSENGER 3 ---
+    // Summary (Page 0) - Offset approx -87 from Pax 2
+    departurePassengerName_3: { x: 50, y: 500, fontSize: 10, font: "regular",color:COLORS.semiDarkerGrey, width: 280, height: 13 },
+    returnPassengerName_3: { x: 50, y: 244, fontSize: 10, font: "regular",color:COLORS.semiDarkerGrey, width: 280, height: 13 },
     
-    departureFlightNo: { x: 160, y: 485, fontSize: 7.5, font: "regular", width: 72, height: 8 },
-    departureDate: { x: 235, y: 485, fontSize: 7.5, font: "regular", width: 50, height: 8 },
+    // BP (Page 1) - Offset approx -30 from Pax 2
+    departureTicketNumber_3: { x: 433, y: 535.3,backGround:COLORS.backGroundGrey,pageIndex:1, font: "regular",color:COLORS.semiDarkGrey, fontSize: 10, width: 85, height: 10 }, 
+    returnTicketNumber_3: { x: 433.7, y:160,backGround:COLORS.backGroundGrey,pageIndex:1, font: "regular",color:COLORS.semiDarkGrey, fontSize: 10, width: 85, height: 10 }, 
+
+    departureTravellerName_3: { x: 50, y: 535.3,backGround:COLORS.backGroundGrey,pageIndex:1, font: "regular", fontSize: 10, width: 200, height: 12 }, 
+    departureTravellerType_3: { x: 250, y: 535.3,backGround:COLORS.backGroundGrey,pageIndex:1, color:COLORS.grey, font: "regular", fontSize: 10, width: 20, height: 12 },
+
+    returnTravellerName_3: { x: 50, y:160,backGround:COLORS.backGroundGrey,pageIndex:1, font: "regular", fontSize: 10, width: 230, height: 10 }, 
+    returnTravellerType_3: { x: 250, y:160,backGround:COLORS.backGroundGrey,pageIndex:1, color:COLORS.grey, font: "regular", fontSize: 10, width: 20, height: 10 }, 
     
-    returnFlightNo: { x: 144, y: 316, fontSize: 7.5, font: "regular", width: 69, height: 8 },
-    returnDate: { x: 226, y: 316, fontSize: 7.5, font: "regular", width: 50, height: 8 },
   },
   barcodes: {
-    departure: { x: 45.5, y: 433.5, width: 105, height: 35 },
-    return: { x: 46.0, y: 264.0, width: 105, height: 35 },
-     // Pax 2 placeholders
-    departure_2: { x: 45.5, y: 433.5 - 40, width: 105, height: 35 }, 
-    return_2: { x: 46.0, y: 264.0 - 40, width: 105, height: 35 },
-     // Pax 3 placeholders
-    departure_3: { x: 45.5, y: 433.5 - 80, width: 105, height: 35 }, 
-    return_3: { x: 46.0, y: 264.0 - 80, width: 105, height: 35 },
+    // Pax 1
+    departure: { x: 425.5, y: 629, width: 98, height: 22 }, 
+    return: { x: 427, y: 368, width: 97.5, height: 22 },
+
+    // Pax 2
+    departure_2: { x: 426.7, y: 567.2, width: 98, height: 23},
+    return_2: { x: 426.8, y: 302.5, width: 97.5, height: 23},
+
+    // Pax 3 - Offset approx -87 from Pax 2
+    departure_3: { x: 427, y: 511.3, width: 98, height: 22},
+    return_3: { x: 422.6, y: 241.4, width: 102.5, height: 23.3},
   },
 };
 

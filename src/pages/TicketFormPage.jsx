@@ -16,20 +16,8 @@ export default function TicketFormPage() {
   const navigate = useNavigate();
   const paxCount = parseInt(count) || 1;
 
-  // Derive template ID. 
-  // Map: family=mmt_malayasia, count=1 -> mmt_malayasia_single
-  // Map: family=indigo_th, count=1 -> indigo_th_single
-  // We should probably normalize this naming convention.
-  // For now, let's construct it:
   const suffix = paxCount === 1 ? 'single' : paxCount === 2 ? 'double' : 'triple';
   const templateId = `${family}_${suffix}`;
-
-  // We'll need to fetch the actual template config from registry.
-  // Since we haven't created the new templates in the registry yet, this might fail if we run it immediately.
-  // But we are setting up the structure.
-  
-  // NOTE: In App.jsx currently, it imports { TEMPLATE_REGISTRY } from "./templates".
-  // I will assume that registry exists.
   
   const template = TEMPLATE_REGISTRY[templateId] || TEMPLATE_REGISTRY["indigo_th_single"]; // Fallback for safety/testing
 
@@ -41,7 +29,7 @@ export default function TicketFormPage() {
     bookingDate: "",
     bookingTime: "",
     pnr: "",
-    pdfName: "ticket",
+    pdfName: "",
     
     departureBoardingDate: "",
     departureLandingDate: "",
@@ -68,6 +56,19 @@ export default function TicketFormPage() {
         setPassengers(Array(paxCount).fill(null).map((_, i) => passengers[i] || { passengerName: "" }));
     }
   }, [paxCount]);
+
+  // Apply template-specific defaults when template changes
+  useEffect(() => {
+    const defaults = template?.config?.defaults;
+    if (defaults) {
+      setFlightForm(prev => ({
+        ...prev,
+        departureFlightNo: defaults.departureFlightNo || prev.departureFlightNo,
+        returnFlightNo: defaults.returnFlightNo || prev.returnFlightNo,
+        barcodeExtra: defaults.barcodeExtra || prev.barcodeExtra,
+      }));
+    }
+  }, [templateId]);
 
 
   const handleFlightChange = (e) => {
@@ -172,7 +173,7 @@ export default function TicketFormPage() {
             bookingDate: "",
             bookingTime: "",
             pnr: "",
-            pdfName: "ticket",
+            pdfName: "",
             departureBoardingDate: "",
             departureLandingDate: "",
             departureFlightNo: "",
@@ -224,7 +225,6 @@ export default function TicketFormPage() {
                 passenger={pax} 
                 handleChange={handlePassengerChange} 
                 showETicket={templateId.includes('mmt')}
-                showAge={templateId.includes('mmt')}
             />
         ))}
 

@@ -25,19 +25,6 @@ export default function PassengerDetailsForm({ index, passenger, handleChange, s
           />
         </label>
       )}
-
-      {showAge && (
-        <label style={{ display: 'block', marginBottom: 10 }}>
-          Age
-          <input
-            name="age"
-            placeholder="e.g. 25"
-            value={passenger.age || ''}
-            onChange={(e) => handleChange(index, 'age', e.target.value)}
-            style={{ width: '100%', padding: 8, marginTop: 5 }}
-          />
-        </label>
-      )}
     </div>
   );
 }
