@@ -56,7 +56,7 @@ export default function HomeSelection() {
             style={{ padding: 10, fontSize: 16, width: "100%", marginBottom: 20 }}
         >
             <option value="mmt_malaysia">MMT Malaysia</option>
-            {/* Add more template families here as they come */}
+            <option value="move_thailand">Move Thailand AirAsia</option>
             <option value="indigo_th">Thailand Indigo (Legacy)</option>
         </select>
 

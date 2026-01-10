@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { TEMPLATE_REGISTRY } from "../templates"; // We need to fix this import path if TEMPLATE_REGISTRY isn't exported centrally yet
 import FlightDetailsForm from "../components/FlightDetailsForm";
 import PassengerDetailsForm from "../components/PassengerDetailsForm";
-import { mapIndigoData, mapMMTData } from "../templates/mappers";
+import { mapIndigoData, mapMMTData, mapMoveData } from "../templates/mappers";
 
 // Utils
 import { generatePdf } from "../utils/pdf";
@@ -91,12 +91,14 @@ export default function TicketFormPage() {
         
         const firstPax = passengers[0];
 
-        // Select Mapper
+        // Select Mapper based on template family
         let pdfFields = {};
         if (templateId.includes('mmt')) {
             pdfFields = mapMMTData(flightForm, passengers);
+        } else if (templateId.includes('move_thailand')) {
+            pdfFields = mapMoveData(flightForm, passengers);
         } else {
-            // Default to Indigo (Legacy)
+            // Default to Indigo
             pdfFields = mapIndigoData(flightForm, passengers);
         }
 

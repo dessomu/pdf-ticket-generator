@@ -67,3 +67,57 @@ export function formatMMTFlightDate(dateInput) {
 
   return `${weekday},${day} ${month} ${year}`;
 }
+
+// Returns date in format "19 Sep"
+export function formatMoveDayMonth(dateInput) {
+  if (!dateInput) return "";
+  const date = new Date(dateInput);
+  
+  const day = new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+  }).format(date);
+  
+  const month = new Intl.DateTimeFormat("en-GB", {
+    month: "short",
+  }).format(date);
+  
+  return `${day} ${month}`;
+}
+
+export function formatMoveFlightDate(dateInput) {
+    if(!dateInput) return "";
+    const date = new Date(dateInput);
+    const weekday = new Intl.DateTimeFormat("en-GB", {
+    weekday: "long",
+  }).format(date);
+
+    const month = new Intl.DateTimeFormat("en-GB", {
+    month: "long",
+  }).format(date);
+
+    const day = new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+  }).format(date);
+
+  const year = new Intl.DateTimeFormat("en-GB", {
+    year: "numeric",
+  }).format(date);
+    return `${weekday}, ${month} ${day} ${year}`;
+}
+
+export function formatMoveBookingDate(dateInput) {
+    if(!dateInput) return "";
+    const date = new Date(dateInput);
+    const day = new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+  }).format(date);
+  
+  const month = new Intl.DateTimeFormat("en-GB", {
+    month: "short",
+  }).format(date);
+  
+  const year = new Intl.DateTimeFormat("en-GB", {
+    year: "numeric",
+  }).format(date);
+    return `${day} ${month}, ${year}`;
+}

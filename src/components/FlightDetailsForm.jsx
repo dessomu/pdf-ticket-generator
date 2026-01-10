@@ -1,9 +1,10 @@
 import React from 'react';
 
 export default function FlightDetailsForm({ form, handleChange, templateConfig }) {
-  // Check if this is an MMT template based on ID or label
+  // Check if this is an MMT or Move Thailand template
   const isMMT = templateConfig?.id?.includes('mmt');
-
+  const isMove = templateConfig?.id?.includes('move_thailand');
+  const hideBookingTime = isMMT || isMove;
   return (
     <div style={{ padding: 20, border: '1px solid #eee', borderRadius: 8, marginBottom: 20 }}>
       <h4>Booking Information</h4>
@@ -19,7 +20,7 @@ export default function FlightDetailsForm({ form, handleChange, templateConfig }
           />
         </label>
 
-        {!isMMT && (
+        {!hideBookingTime && (
           <label>
             Booking Time
             <input

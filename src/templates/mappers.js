@@ -1,5 +1,5 @@
 import { splitName,cleanName } from "../utils/name";
-import { formatDate, formatFlightDate, formatJourneyDate,formatMMTJourneyDate,formatMMTFlightDate } from "../utils/date";
+import { formatDate, formatFlightDate, formatJourneyDate,formatMMTJourneyDate,formatMMTFlightDate,formatMoveDayMonth,formatMoveFlightDate,formatMoveBookingDate } from "../utils/date";
 import { formatName } from "../utils/name";
 
 /**
@@ -83,6 +83,44 @@ export function mapMMTData(form, passengers) {
         
         pdfFields[`departurePassengerName${suffix}`] = formatName(cleanedName);
         pdfFields[`returnPassengerName${suffix}`] = formatName(cleanedName);
+    });
+
+    return pdfFields;
+}
+
+// Maps form data to PDF fields for Move Thailand templates.
+export function mapMoveData(form, passengers) {
+    
+    const pdfFields = {
+        // Booking info
+        bookingTimeString: formatMoveBookingDate(form.bookingDate),
+        pnr: form.pnr,
+        
+        // Flight details
+        departureFlightNo: form.departureFlightNo,
+        returnFlightNo: form.returnFlightNo,
+
+        departureBriefDate: formatMoveFlightDate(form.departureBoardingDate),
+        returnBriefDate: formatMoveFlightDate(form.returnBoardingDate),
+        
+        departureDate: formatMoveFlightDate(form.departureBoardingDate),
+        returnDate: formatMoveFlightDate(form.returnBoardingDate),
+        
+        departureBoardingDate: formatMoveDayMonth(form.departureBoardingDate),
+        departureLandingDate: formatMoveDayMonth(form.departureBoardingDate),
+        returnBoardingDate: formatMoveDayMonth(form.returnBoardingDate),
+        returnLandingDate: formatMoveDayMonth(form.returnBoardingDate),
+    };
+    
+    // Generate passenger-specific fields
+    passengers.forEach((pax, i) => {
+        const idx = i + 1;
+        const suffix = i === 0 ? "" : `_${idx}`; // e.g., "", "_2"
+        
+        const cleanedName = cleanName(pax.passengerName);
+        pdfFields[`passengerName${suffix}`] = formatName(cleanedName);
+        pdfFields[`boardingPassengerName${suffix}`] = formatName(cleanedName);
+        pdfFields[`returningPassengerName${suffix}`] = formatName(cleanedName);
     });
 
     return pdfFields;
