@@ -10,37 +10,8 @@ export default function HomeSelection() {
   const [paxCount, setPaxCount] = useState(1);
 
   // Helper to extract passenger counts from template IDs if needed, 
-  // or just hardcode selection if templates are specific (e.g. mmt_malayasia_single vs double)
-  // For this specific request, the user wants "single", "double", "triple" templates.
-  // We can let the user pick "MMT Malaysia" and "Passenger Count", then map that to the specific template ID.
-  
-  // Actually, the plan says: "Lists available templates... Allow user to select Number of Passengers"
-  // And the templates are named `mmt_malayasia_single`, `mmt_malayasia_double`, etc.
-  
   const handleProceed = () => {
-    // Construct the template ID based on selection? 
-    // Or just pass the logic to the next page?
-    // Let's assume the user selects "MMT Malaysia" generally, and the count determines the specific template file?
-    // OR, we just select the specific template directly.
-    
-    // Simplest approach: "Select Template Family" + "Passenger Count" -> derive template ID.
-    // But since the IDs are explicit (mmt_malayasia_single), let's map it.
-    
-    // Let's assume for now we just navigate to the form and let the form handle loading the right template logic 
-    // OR we pick the ID right here.
-    
     let templateId = selectedTemplate;
-    
-    // If we want to support dynamic switching based on count:
-    // This is a bit rigid if we hardcode "mmt_malayasia_single".
-    // Let's simplify: User picks "MMT Malaysia", and "2 Pax".
-    // We navigate to /form/mmt_malayasia/2
-    // And the TicketFormPage figures out it needs `mmt_malayasia_double` config.
-    
-    // However, the registry keys will be unique.
-    // Let's navigate to /form/:family/:count
-    // Family = mmt_malayasia
-    
     navigate(`/form/${selectedTemplate}/${paxCount}`);
   };
 
@@ -56,8 +27,9 @@ export default function HomeSelection() {
             style={{ padding: 10, fontSize: 16, width: "100%", marginBottom: 20 }}
         >
             <option value="mmt_malaysia">MMT Malaysia</option>
-            <option value="move_thailand">Move Thailand AirAsia</option>
+            <option value="move_thailand">Move Thailand</option>
             <option value="indigo_th">Thailand Indigo (Legacy)</option>
+            <option value="move_malaysia">Move Malaysia</option>
         </select>
 
         <h3>Number of Passengers</h3>

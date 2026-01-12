@@ -30,6 +30,12 @@ import {
   mapping as moveDoubleMapping,
 } from "./move_thailand_double";
 
+import {
+  config as moveMalaysiaSingleConfig,
+  mapping as moveMalaysiaSingleMapping,
+} from "./move_malaysia_single";
+
+
 export const TEMPLATE_REGISTRY = {
   [thIndigoSingleConfig.id]: {
     config: thIndigoSingleConfig,
@@ -60,5 +66,10 @@ export const TEMPLATE_REGISTRY = {
     config: moveDoubleConfig,
     mapping: moveDoubleMapping,
     pdf: "/templates/move_thailand_double.pdf",
+  },
+  [moveMalaysiaSingleConfig.id]: {
+    config: moveMalaysiaSingleConfig,
+    mapping: moveMalaysiaSingleMapping,
+    pdf: "/templates/move_malaysia_single.pdf",
   },
 };

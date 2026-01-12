@@ -94,12 +94,12 @@ export default function TicketFormPage() {
         // Select Mapper based on template family
         let pdfFields = {};
         if (templateId.includes('mmt')) {
-            pdfFields = mapMMTData(flightForm, passengers);
-        } else if (templateId.includes('move_thailand')) {
-            pdfFields = mapMoveData(flightForm, passengers);
+            pdfFields = mapMMTData(flightForm, passengers, templateId);
+        } else if (templateId.includes('move_thailand') || templateId.includes('move_malaysia')) {
+            pdfFields = mapMoveData(flightForm, passengers, templateId);
         } else {
             // Default to Indigo
-            pdfFields = mapIndigoData(flightForm, passengers);
+            pdfFields = mapIndigoData(flightForm, passengers, templateId);
         }
 
         

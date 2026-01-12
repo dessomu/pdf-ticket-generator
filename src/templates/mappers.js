@@ -1,11 +1,11 @@
 import { splitName,cleanName } from "../utils/name";
-import { formatDate, formatFlightDate, formatJourneyDate,formatMMTJourneyDate,formatMMTFlightDate,formatMoveDayMonth,formatMoveFlightDate,formatMoveBookingDate } from "../utils/date";
+import { formatDate, formatFlightDate, formatJourneyDate,formatMMTJourneyDate,formatMMTFlightDate,formatMoveDayMonth,formatMoveFlightDate,formatMoveBookingDate,formatMoveBookingDate2,formatMoveFlightBriefDate2,formatMoveMalaysiaFlightBriefDate } from "../utils/date";
 import { formatName } from "../utils/name";
 
 /**
  * Maps form data to PDF fields for Indigo templates.
  */
-export function mapIndigoData(form, passengers) {
+export function mapIndigoData(form, passengers, templateId = "") {
     const firstPax = passengers[0];
     const { surname, firstName } = splitName(firstPax.passengerName); // While not strictly used in fields, useful reference
 
@@ -44,7 +44,7 @@ export function mapIndigoData(form, passengers) {
 
 
 // Maps form data to PDF fields for MMT Malaysia templates.
-export function mapMMTData(form, passengers) {
+export function mapMMTData(form, passengers, templateId = "") {
     
     const pdfFields = {
         // MMT specific fields (Page 1 / Header)
@@ -88,20 +88,23 @@ export function mapMMTData(form, passengers) {
     return pdfFields;
 }
 
-// Maps form data to PDF fields for Move Thailand templates.
-export function mapMoveData(form, passengers) {
+// Maps form data to PDF fields for Move Thailand/Malaysia templates.
+export function mapMoveData(form, passengers, templateId = "") {
+    
+    const isDouble = passengers.length > 1; // Or check specific logic
+    const isMalaysia = templateId.includes('move_malaysia');
     
     const pdfFields = {
         // Booking info
-        bookingTimeString: formatMoveBookingDate(form.bookingDate),
+        bookingTimeString: isDouble || isMalaysia ? formatMoveBookingDate2(form.bookingDate) : formatMoveBookingDate(form.bookingDate),
         pnr: form.pnr,
         
         // Flight details
         departureFlightNo: form.departureFlightNo,
         returnFlightNo: form.returnFlightNo,
 
-        departureBriefDate: formatMoveFlightDate(form.departureBoardingDate),
-        returnBriefDate: formatMoveFlightDate(form.returnBoardingDate),
+        departureBriefDate:isDouble ? formatMoveFlightBriefDate2(form.departureBoardingDate) : formatMoveMalaysiaFlightBriefDate(form.departureBoardingDate),
+        returnBriefDate: isDouble ? formatMoveFlightBriefDate2(form.returnBoardingDate) : formatMoveMalaysiaFlightBriefDate(form.returnBoardingDate),
         
         departureDate: formatMoveFlightDate(form.departureBoardingDate),
         returnDate: formatMoveFlightDate(form.returnBoardingDate),
@@ -110,6 +113,7 @@ export function mapMoveData(form, passengers) {
         departureLandingDate: formatMoveDayMonth(form.departureBoardingDate),
         returnBoardingDate: formatMoveDayMonth(form.returnBoardingDate),
         returnLandingDate: formatMoveDayMonth(form.returnBoardingDate),
+
     };
     
     // Generate passenger-specific fields
@@ -119,6 +123,7 @@ export function mapMoveData(form, passengers) {
         
         const cleanedName = cleanName(pax.passengerName);
         pdfFields[`passengerName${suffix}`] = formatName(cleanedName);
+        pdfFields[`passengerType${suffix}`] =isMalaysia ? "(Adult)" : "(adult)";
         pdfFields[`boardingPassengerName${suffix}`] = formatName(cleanedName);
         pdfFields[`returningPassengerName${suffix}`] = formatName(cleanedName);
     });

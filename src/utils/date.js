@@ -102,7 +102,7 @@ export function formatMoveFlightDate(dateInput) {
   const year = new Intl.DateTimeFormat("en-GB", {
     year: "numeric",
   }).format(date);
-    return `${weekday}, ${month} ${day} ${year}`;
+    return `${weekday}, ${day} ${month} ${year}`;
 }
 
 export function formatMoveBookingDate(dateInput) {
@@ -120,4 +120,59 @@ export function formatMoveBookingDate(dateInput) {
     year: "numeric",
   }).format(date);
     return `${day} ${month}, ${year}`;
+}
+
+export function formatMoveBookingDate2(dateInput) {
+    if(!dateInput) return "";
+    const date = new Date(dateInput);
+    const day = new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+  }).format(date);
+  
+  const month = new Intl.DateTimeFormat("en-GB", {
+    month: "long",
+  }).format(date);
+  
+  const year = new Intl.DateTimeFormat("en-GB", {
+    year: "numeric",
+  }).format(date);
+    return `${day} ${month}, ${year}`;
+}
+
+export function formatMoveFlightBriefDate2(dateInput) {
+    if(!dateInput) return "";
+    const date = new Date(dateInput);
+    const weekday = new Intl.DateTimeFormat("en-GB", {
+    weekday: "short",
+  }).format(date);
+
+    const month = new Intl.DateTimeFormat("en-GB", {
+    month: "short",
+  }).format(date);
+
+    const day = new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+  }).format(date);
+    return `${weekday}, ${month} ${day}`;
+}
+
+export function formatMoveMalaysiaFlightBriefDate(dateInput) {
+    if(!dateInput) return "";
+    const date = new Date(dateInput);
+    const weekday = new Intl.DateTimeFormat("en-GB", {
+    weekday: "long",
+  }).format(date);
+
+    const month = new Intl.DateTimeFormat("en-GB", {
+    month: "long",
+  }).format(date);
+
+    const day = new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+  }).format(date);
+
+  const year = new Intl.DateTimeFormat("en-GB", {
+    year: "numeric",
+  }).format(date);
+    return `${weekday}, ${month} ${day}, ${year}`;
 }

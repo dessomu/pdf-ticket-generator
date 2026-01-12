@@ -1,9 +1,9 @@
 import React from 'react';
 
 export default function FlightDetailsForm({ form, handleChange, templateConfig }) {
-  // Check if this is an MMT or Move Thailand template
+  // Check if this is an MMT or Move template
   const isMMT = templateConfig?.id?.includes('mmt');
-  const isMove = templateConfig?.id?.includes('move_thailand');
+  const isMove = templateConfig?.id?.includes('move_thailand') || templateConfig?.id?.includes('move_malaysia');
   const hideBookingTime = isMMT || isMove;
   return (
     <div style={{ padding: 20, border: '1px solid #eee', borderRadius: 8, marginBottom: 20 }}>
