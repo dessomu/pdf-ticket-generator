@@ -5,12 +5,14 @@ export default function FlightDetailsForm({ form, handleChange, templateConfig }
   const isMMT = templateConfig?.id?.includes('mmt');
   const isMove = templateConfig?.id?.includes('move_thailand') || templateConfig?.id?.includes('move_malaysia');
   const isCleartrip = templateConfig?.id?.includes('cleartrip');
-  const hideBookingTime = isMMT || isMove || isCleartrip;
+  const isIndigoIndonesia = templateConfig?.id?.includes('indigo_indo');
+  const hideBookingTime = isMMT || isMove || isCleartrip || isIndigoIndonesia;
+  const hideBookingDate = isIndigoIndonesia || isCleartrip;
   return (
     <div style={{ padding: 20, border: '1px solid #eee', borderRadius: 8, marginBottom: 20 }}>
       <h4>Booking Information</h4>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-        {!isCleartrip && (
+        {!hideBookingDate && (
          <label>
            Booking Date
             <input

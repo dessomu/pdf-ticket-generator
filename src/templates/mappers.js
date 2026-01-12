@@ -1,6 +1,6 @@
 import { splitName,cleanName } from "../utils/name";
-import { formatDate, formatFlightDate, formatJourneyDate,formatMMTJourneyDate,formatMMTFlightDate,formatMoveDayMonth,formatMoveFlightDate,formatMoveBookingDate,formatMoveBookingDate2,formatMoveFlightBriefDate2,formatMoveMalaysiaFlightBriefDate,formatCleartripFlightDate } from "../utils/date";
-import { formatName } from "../utils/name";
+import { formatDate, formatFlightDate, formatJourneyDate,formatMMTJourneyDate,formatMMTFlightDate,formatMoveDayMonth,formatMoveFlightDate,formatMoveBookingDate,formatMoveBookingDate2,formatMoveFlightBriefDate2,formatMoveMalaysiaFlightBriefDate,formatCleartripFlightDate,formatIndigoIndonesiaDate,getNextDate } from "../utils/date";
+import { formatName,formatIndigoIndonesiaPassengerName } from "../utils/name";
 
 /**
  * Maps form data to PDF fields for Indigo templates.
@@ -161,4 +161,38 @@ export function mapCleartripData(form, passengers, templateId = "") {
     });
 
     return pdfFields;
+}
+
+// Maps form data to PDF fields for Indigo Indo (Break Journey) templates.
+export function mapIndigoIndoData(form, passengers, templateId = "") {
+    const firstPax = passengers[0];
+
+    const nextDate = getNextDate(form.departureBoardingDate);
+    const pdfFields = {
+        pnr: form.pnr,
+        passengerType:"Adult",
+        
+        // Flight Dates
+        departureBoardingDate: `16:45 hrs, ${formatIndigoIndonesiaDate(form.departureBoardingDate)}`,
+        departureSecondBoardingDate: `01:10 hrs, ${formatIndigoIndonesiaDate(nextDate)}`,
+        departureLandingDate: `20:10 hrs, ${formatIndigoIndonesiaDate(form.departureBoardingDate)}`,
+        departureSecondLandingDate: `10:15 hrs, ${formatIndigoIndonesiaDate(nextDate)}`,
+
+        returnBoardingDate: `11:30 hrs, ${formatIndigoIndonesiaDate(form.returnBoardingDate)}`,
+        returnSecondBoardingDate: `18:15 hrs, ${formatIndigoIndonesiaDate(form.returnBoardingDate)}`,
+        returnLandingDate: `15:30 hrs, ${formatIndigoIndonesiaDate(form.returnBoardingDate)}`,
+        returnSecondLandingDate: `21:15 hrs, ${formatIndigoIndonesiaDate(form.returnBoardingDate)}`,
+        
+        departureDate: formatIndigoIndonesiaDate(form.departureBoardingDate),
+        departureSecondDate: formatIndigoIndonesiaDate(nextDate),
+        
+        returnDate: formatIndigoIndonesiaDate(form.returnBoardingDate),
+        returnSecondDate: formatIndigoIndonesiaDate(form.returnBoardingDate),
+        
+        // Pax 1
+        passengerName: formatIndigoIndonesiaPassengerName(firstPax.passengerName), 
+    };
+
+    return pdfFields;
+
 }

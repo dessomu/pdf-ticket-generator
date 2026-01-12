@@ -30,3 +30,29 @@ export function formatName(fullName) {
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 }
+
+const TITLE_MAP = {
+  "MR.": "Mr.",
+  "MS.": "Ms.",
+  "mr.": "Mr.",
+  "ms.": "Ms.",
+  "MRS.": "Mrs.",
+  "MSTR.": "Mstr.",
+  "MR": "Mr.",
+  "MS": "Ms.",
+
+};
+
+export function formatIndigoIndonesiaPassengerName(name) {
+  if (!name) return "";
+
+  const trimmed = name.trim().toUpperCase();
+
+  for (const key in TITLE_MAP) {
+    if (trimmed.startsWith(key)) {
+      return TITLE_MAP[key] + trimmed.slice(key.length);
+    }
+  }
+
+  return trimmed;
+}

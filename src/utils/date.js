@@ -8,6 +8,17 @@ export function getDayFromDate(dateStr) {
   });
 }
 
+export function getNextDate(dateStr) {
+  if (!dateStr) return "";
+
+  const [year, month, day] = dateStr.split("-").map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  date.setUTCDate(date.getUTCDate() + 1);
+
+  return date.toISOString().split("T")[0];
+}
+
+
 export function formatDate(dateInput) {
     if(!dateInput) return "";
     const date = new Date(dateInput);
@@ -207,4 +218,10 @@ export function formatCleartripFlightDate(dateInput) {
   }).format(date);
 
   return `${weekday}, ${day} ${month} ${year}`;
+}
+
+export function formatIndigoIndonesiaDate(dateInput) {
+    if(!dateInput) return "";
+    const date = new Date(dateInput);
+    return new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "short", year: "numeric" }).format(date);
 }

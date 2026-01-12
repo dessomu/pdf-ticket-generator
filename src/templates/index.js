@@ -6,6 +6,11 @@ import {
 } from "./th_indigo_single";
 
 import {
+  config as indigoIndoSingleConfig,
+  mapping as indigoIndoSingleMapping,
+} from "./indigo_indo_single";
+
+import {
   config as mmtSingleConfig,
   mapping as mmtSingleMapping,
 } from "./mmt_malaysia_single";
@@ -51,6 +56,11 @@ export const TEMPLATE_REGISTRY = {
     config: thIndigoSingleConfig,
     mapping: thIndigoSingleMapping,
     pdf: "/templates/indigo_th_single.pdf",
+  },
+  [indigoIndoSingleConfig.id]: {
+    config: indigoIndoSingleConfig,
+    mapping: indigoIndoSingleMapping,
+    pdf: "/templates/indigo_indo_single.pdf", // Assuming pdf name
   },
   [mmtSingleConfig.id]: {
     config: mmtSingleConfig,

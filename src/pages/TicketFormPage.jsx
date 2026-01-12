@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { TEMPLATE_REGISTRY } from "../templates"; // We need to fix this import path if TEMPLATE_REGISTRY isn't exported centrally yet
 import FlightDetailsForm from "../components/FlightDetailsForm";
 import PassengerDetailsForm from "../components/PassengerDetailsForm";
-import { mapIndigoData, mapMMTData, mapMoveData, mapCleartripData } from "../templates/mappers";
+import { mapIndigoData, mapMMTData, mapMoveData, mapCleartripData, mapIndigoIndoData } from "../templates/mappers";
 
 // Utils
 import { generatePdf } from "../utils/pdf";
@@ -103,6 +103,8 @@ export default function TicketFormPage() {
             pdfFields = mapMoveData(flightForm, passengers, templateId);
         } else if (templateId.includes('cleartrip')) {
             pdfFields = mapCleartripData(flightForm, passengers, templateId);
+        } else if (templateId.includes('indigo_indo')) {
+            pdfFields = mapIndigoIndoData(flightForm, passengers, templateId);
         } else {
             // Default to Indigo
             pdfFields = mapIndigoData(flightForm, passengers, templateId);
@@ -118,6 +120,43 @@ export default function TicketFormPage() {
             const addBarcode = (suffix, paxName) => {
                  const { surname: s, firstName: f } = splitName(paxName);
                  
+                 // Handle Multi-Leg Barcodes (e.g. Indigo Indo)
+                 if (template.config.barcode.multiLeg && Array.isArray(template.config.barcode.legs.departure)) {
+                     // Process Departure Legs
+                     template.config.barcode.legs.departure.forEach((leg, idx) => {
+                         // Keys: departure, departureSec
+                         const keyBase = idx === 0 ? "departure" : "departureSec";
+                         const key = `${keyBase}${suffix}`;
+                         
+                         const text = buildBarcodeText({
+                             surname: s, name: f, pnr: flightForm.pnr,
+                             source: leg.source, destination: leg.destination,
+                             flightNo: leg.flightNo, // Use leg-specific flight number
+                             suffix: flightForm.barcodeExtra,
+                             format: template.config.barcode.format
+                         });
+                         barcodeImages[key] = generatePDF417(text);
+                     });
+                     
+                     // Process Return Legs
+                     template.config.barcode.legs.return.forEach((leg, idx) => {
+                         // Keys: return, returnSec
+                         const keyBase = idx === 0 ? "return" : "returnSec";
+                         const key = `${keyBase}${suffix}`;
+                         
+                         const text = buildBarcodeText({
+                             surname: s, name: f, pnr: flightForm.pnr,
+                             source: leg.source, destination: leg.destination,
+                             flightNo: leg.flightNo, // Use leg-specific flight number
+                             suffix: flightForm.barcodeExtra,
+                             format: template.config.barcode.format
+                         });
+                         barcodeImages[key] = generatePDF417(text);
+                     });
+                     return; // Exit standard logic
+                 }
+
+                 // Standard Single Leg Logic
                  const depText = buildBarcodeText({
                     surname: s,
                     name: f,
