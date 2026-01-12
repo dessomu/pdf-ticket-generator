@@ -12,8 +12,8 @@ export function splitName(fullName) {
   const parts = cleaned.split(/\s+/);
 
   // 3️⃣ Extract names
-  const firstName = parts[0] || "";
-  const surname = parts.length > 1 ? parts.slice(1).join(" ") : "";
+  const firstName = (parts[0] || "").toUpperCase();
+  const surname = (parts.length > 1 ? parts.slice(1).join(" ") : "").toUpperCase();
 
   return { firstName, surname };
 }

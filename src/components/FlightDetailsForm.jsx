@@ -4,21 +4,25 @@ export default function FlightDetailsForm({ form, handleChange, templateConfig }
   // Check if this is an MMT or Move template
   const isMMT = templateConfig?.id?.includes('mmt');
   const isMove = templateConfig?.id?.includes('move_thailand') || templateConfig?.id?.includes('move_malaysia');
-  const hideBookingTime = isMMT || isMove;
+  const isCleartrip = templateConfig?.id?.includes('cleartrip');
+  const hideBookingTime = isMMT || isMove || isCleartrip;
   return (
     <div style={{ padding: 20, border: '1px solid #eee', borderRadius: 8, marginBottom: 20 }}>
       <h4>Booking Information</h4>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-        <label>
-          Booking Date
-          <input
+        {!isCleartrip && (
+         <label>
+           Booking Date
+            <input
             type="date"
             name="bookingDate"
             value={form.bookingDate}
             onChange={handleChange}
             style={{ width: '100%' }}
-          />
-        </label>
+            />
+         </label>
+        ) }
+       
 
         {!hideBookingTime && (
           <label>
@@ -39,6 +43,18 @@ export default function FlightDetailsForm({ form, handleChange, templateConfig }
               <input
                 name="bookingId"
                 value={form.bookingId || ''}
+                onChange={handleChange}
+                style={{ width: '100%' }}
+              />
+            </label>
+        )}
+
+        {isCleartrip && (
+            <label>
+              Trip ID
+              <input
+                name="tripId"
+                value={form.tripId || ''}
                 onChange={handleChange}
                 style={{ width: '100%' }}
               />

@@ -30,6 +30,7 @@ export default function HomeSelection() {
             <option value="move_thailand">Move Thailand</option>
             <option value="indigo_th">Thailand Indigo (Legacy)</option>
             <option value="move_malaysia">Move Malaysia</option>
+            <option value="cleartrip">Cleartrip</option>
         </select>
 
         <h3>Number of Passengers</h3>

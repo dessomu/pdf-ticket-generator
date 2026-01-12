@@ -176,3 +176,35 @@ export function formatMoveMalaysiaFlightBriefDate(dateInput) {
   }).format(date);
     return `${weekday}, ${month} ${day}, ${year}`;
 }
+
+export function formatCleartripBarcodeDate(dateInput) {
+  const date = new Date(dateInput);
+
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+
+  const year = String(date.getFullYear()).slice(-3);
+
+  return `${day}${month}${year}`;
+}
+
+export function formatCleartripFlightDate(dateInput) {
+  const date = new Date(dateInput);
+
+  const weekday = new Intl.DateTimeFormat("en-GB", {
+    weekday: "short",
+  }).format(date);
+
+  const day = new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+  }).format(date);
+
+  const month = new Intl.DateTimeFormat("en-GB", {
+    month: "short",
+  }).format(date);
+  const year = new Intl.DateTimeFormat("en-GB", {
+    year: "numeric",
+  }).format(date);
+
+  return `${weekday}, ${day} ${month} ${year}`;
+}

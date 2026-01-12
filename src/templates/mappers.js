@@ -1,5 +1,5 @@
 import { splitName,cleanName } from "../utils/name";
-import { formatDate, formatFlightDate, formatJourneyDate,formatMMTJourneyDate,formatMMTFlightDate,formatMoveDayMonth,formatMoveFlightDate,formatMoveBookingDate,formatMoveBookingDate2,formatMoveFlightBriefDate2,formatMoveMalaysiaFlightBriefDate } from "../utils/date";
+import { formatDate, formatFlightDate, formatJourneyDate,formatMMTJourneyDate,formatMMTFlightDate,formatMoveDayMonth,formatMoveFlightDate,formatMoveBookingDate,formatMoveBookingDate2,formatMoveFlightBriefDate2,formatMoveMalaysiaFlightBriefDate,formatCleartripFlightDate } from "../utils/date";
 import { formatName } from "../utils/name";
 
 /**
@@ -126,6 +126,38 @@ export function mapMoveData(form, passengers, templateId = "") {
         pdfFields[`passengerType${suffix}`] =isMalaysia ? "(Adult)" : "(adult)";
         pdfFields[`boardingPassengerName${suffix}`] = formatName(cleanedName);
         pdfFields[`returningPassengerName${suffix}`] = formatName(cleanedName);
+    });
+
+    return pdfFields;
+}
+
+// Maps form data to PDF fields for Cleartrip templates.
+export function mapCleartripData(form, passengers, templateId = "") {
+    
+    const isDouble = passengers.length > 1;
+    
+    const pdfFields = {
+        // Booking info
+        tripId: form.tripId || "",    // Cleartrip-specific field
+        
+        departureDate: formatCleartripFlightDate(form.departureBoardingDate),
+        returnDate: formatCleartripFlightDate(form.returnBoardingDate),
+        
+        departureBoardingDate: formatCleartripFlightDate(form.departureBoardingDate),
+        departureLandingDate: formatCleartripFlightDate(form.departureBoardingDate),
+        returnBoardingDate: formatCleartripFlightDate(form.returnBoardingDate),
+        returnLandingDate: formatCleartripFlightDate(form.returnBoardingDate),
+
+    };  
+    
+    // Generate passenger-specific fields
+    passengers.forEach((pax, i) => {
+        const idx = i + 1;
+        const suffix = i === 0 ? "" : `_${idx}`; // e.g., "", "_2"
+        
+        pdfFields[`passengerName${suffix}`] = formatName(pax.passengerName);
+        pdfFields[`airLinePnr${suffix}`] = form.pnr;
+        pdfFields[`ticketNumber${suffix}`] = form.pnr;
     });
 
     return pdfFields;

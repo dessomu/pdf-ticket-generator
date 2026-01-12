@@ -3,13 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import { TEMPLATE_REGISTRY } from "../templates"; // We need to fix this import path if TEMPLATE_REGISTRY isn't exported centrally yet
 import FlightDetailsForm from "../components/FlightDetailsForm";
 import PassengerDetailsForm from "../components/PassengerDetailsForm";
-import { mapIndigoData, mapMMTData, mapMoveData } from "../templates/mappers";
+import { mapIndigoData, mapMMTData, mapMoveData, mapCleartripData } from "../templates/mappers";
 
 // Utils
 import { generatePdf } from "../utils/pdf";
 import { buildBarcodeText } from "../utils/barcodeBuilder";
 import { generatePDF417 } from "../utils/barcode";
 import { splitName } from "../utils/name";
+import { formatCleartripBarcodeDate } from "../utils/date";
 
 export default function TicketFormPage() {
   const { family, count } = useParams();
@@ -43,6 +44,9 @@ export default function TicketFormPage() {
     
     // MMT specific
     bookingId: "",
+    
+    // Cleartrip specific
+    tripId: "",
   });
 
   // Passengers Array
@@ -97,6 +101,8 @@ export default function TicketFormPage() {
             pdfFields = mapMMTData(flightForm, passengers, templateId);
         } else if (templateId.includes('move_thailand') || templateId.includes('move_malaysia')) {
             pdfFields = mapMoveData(flightForm, passengers, templateId);
+        } else if (templateId.includes('cleartrip')) {
+            pdfFields = mapCleartripData(flightForm, passengers, templateId);
         } else {
             // Default to Indigo
             pdfFields = mapIndigoData(flightForm, passengers, templateId);
@@ -120,6 +126,8 @@ export default function TicketFormPage() {
                     destination: template.config.barcode.legs.departure.destination,
                     flightNo: flightForm.departureFlightNo,
                     suffix: flightForm.barcodeExtra,
+                    format: template.config.barcode.format,
+                    journeyDate: template.config.barcode.format === "cleartrip" ? formatCleartripBarcodeDate(flightForm.departureBoardingDate) : undefined,
                 });
                 const retText = buildBarcodeText({
                     surname: s,
@@ -129,6 +137,8 @@ export default function TicketFormPage() {
                     destination: template.config.barcode.legs.return.destination,
                     flightNo: flightForm.returnFlightNo,
                     suffix: flightForm.barcodeExtra,
+                    format: template.config.barcode.format,
+                    journeyDate: template.config.barcode.format === "cleartrip" ? formatCleartripBarcodeDate(flightForm.returnBoardingDate) : undefined,
                 });
                 
                 // suffix is like "" (for 1st pax), "_2", "_3"
@@ -178,12 +188,16 @@ export default function TicketFormPage() {
             pdfName: "",
             departureBoardingDate: "",
             departureLandingDate: "",
-            departureFlightNo: "",
+            
+            // Respect defaults on reset
+            departureFlightNo: template?.config?.defaults?.departureFlightNo || "",
+            returnFlightNo: template?.config?.defaults?.returnFlightNo || "",
+            barcodeExtra: template?.config?.defaults?.barcodeExtra || "",
+            
             returnBoardingDate: "",
             returnLandingDate: "",
-            returnFlightNo: "",
-            barcodeExtra: "",
             bookingId: "",
+            tripId: "",
         });
         setPassengers(Array(paxCount).fill(null).map(() => ({ passengerName: "" })));
 

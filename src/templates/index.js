@@ -35,6 +35,16 @@ import {
   mapping as moveMalaysiaSingleMapping,
 } from "./move_malaysia_single";
 
+import {
+  config as cleartripSingleConfig,
+  mapping as cleartripSingleMapping,
+} from "./cleartrip_single";
+
+import {
+  config as cleartripDoubleConfig,
+  mapping as cleartripDoubleMapping,
+} from "./cleartrip_double";
+
 
 export const TEMPLATE_REGISTRY = {
   [thIndigoSingleConfig.id]: {
@@ -71,5 +81,15 @@ export const TEMPLATE_REGISTRY = {
     config: moveMalaysiaSingleConfig,
     mapping: moveMalaysiaSingleMapping,
     pdf: "/templates/move_malaysia_single.pdf",
+  },
+  [cleartripSingleConfig.id]: {
+    config: cleartripSingleConfig,
+    mapping: cleartripSingleMapping,
+    pdf: "/templates/cleartrip_single.pdf",
+  },
+  [cleartripDoubleConfig.id]: {
+    config: cleartripDoubleConfig,
+    mapping: cleartripDoubleMapping,
+    pdf: "/templates/cleartrip_double.pdf",
   },
 };
