@@ -1,6 +1,6 @@
 import { splitName,cleanName } from "../utils/name";
 import { formatDate, formatFlightDate, formatJourneyDate,formatMMTJourneyDate,formatMMTFlightDate,formatMoveDayMonth,formatMoveFlightDate,formatMoveBookingDate,formatMoveBookingDate2,formatMoveFlightBriefDate2,formatMoveMalaysiaFlightBriefDate,formatCleartripFlightDate,formatIndigoIndonesiaDate,getNextDate } from "../utils/date";
-import { formatName,formatIndigoIndonesiaPassengerName } from "../utils/name";
+import { formatName,formatIndigoIndonesiaPassengerName,formatIataPassengerName } from "../utils/name";
 
 /**
  * Maps form data to PDF fields for Indigo templates.
@@ -195,4 +195,24 @@ export function mapIndigoIndoData(form, passengers, templateId = "") {
 
     return pdfFields;
 
+}
+
+// Maps form data to PDF fields for Trip IATA templates.
+export function mapTripIataData(form, passengers, templateId = "") {
+    const pdfFields = {
+        bookingId: form.bookingId,
+        bookingReference:`${form.pnr} )`,
+       
+        departureBoardingDate: `00:30 ${formatFlightDate(form.departureBoardingDate)}`,
+        departureLandingDate: `04:30 ${formatFlightDate(form.departureBoardingDate)}`,
+        returnBoardingDate: `22:45 ${formatFlightDate(form.returnBoardingDate)}`,
+        returnLandingDate: `23:55 ${formatFlightDate(form.returnBoardingDate)}`,
+    };
+    
+    passengers.forEach((pax, i) => {
+         const suffix = i === 0 ? "" : `_${i + 1}`;
+         pdfFields[`passengerName${suffix}`] = formatIataPassengerName(pax.passengerName);
+         pdfFields[`ticketNumber${suffix}`] = form.pnr;
+    });
+    return pdfFields;
 }

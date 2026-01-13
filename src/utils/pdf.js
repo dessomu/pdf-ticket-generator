@@ -71,6 +71,17 @@ const textWidth = regularFont.widthOfTextAtSize(value, pos.fontSize);
       font: pos.font === "regular" ? regularFont : boldFont,
       color: pos.color || rgb(0, 0, 0),
     });
+
+    //draw underline
+    if (pos.underline) {
+     const underlineOffset = pos.underlineOffset ?? pos.fontSize * 0.15;
+     targetPage.drawLine({
+      start: { x: pos.x, y: pos.y - underlineOffset },
+      end: { x: pos.x + textWidth, y: pos.y - underlineOffset },
+      thickness: 0.5,
+      color: pos.color || rgb(0, 0, 0),
+     });
+    }
   });
 
   // Prepare barcode map

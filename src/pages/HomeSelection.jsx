@@ -26,12 +26,13 @@ export default function HomeSelection() {
             onChange={(e) => setSelectedTemplate(e.target.value)}
             style={{ padding: 10, fontSize: 16, width: "100%", marginBottom: 20 }}
         >
-            <option value="mmt_malaysia">MMT Malaysia</option>
-            <option value="move_thailand">Move Thailand</option>
-            <option value="indigo_th">Thailand Indigo (Legacy)</option>
-            <option value="move_malaysia">Move Malaysia</option>
+            <option value="mmt_malaysia">Make My Trip</option>
+            <option value="move_thailand">Move (Thai)</option>
+            <option value="indigo_th">Indigo (Thai)</option>
+            <option value="move_malaysia">Move (Malay)</option>
             <option value="cleartrip">Cleartrip</option>
             <option value="indigo_indo">Indigo (Indo)</option>
+            <option value="trip_iata">Trip (IATA)</option>
         </select>
 
         <h3>Number of Passengers</h3>

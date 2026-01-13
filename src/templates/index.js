@@ -11,6 +11,16 @@ import {
 } from "./indigo_indo_single";
 
 import {
+  config as tripIataSingleConfig,
+  mapping as tripIataSingleMapping,
+} from "./trip_iata_single";
+
+import {
+  config as tripIataDoubleConfig,
+  mapping as tripIataDoubleMapping,
+} from "./trip_iata_double";
+
+import {
   config as mmtSingleConfig,
   mapping as mmtSingleMapping,
 } from "./mmt_malaysia_single";
@@ -61,6 +71,16 @@ export const TEMPLATE_REGISTRY = {
     config: indigoIndoSingleConfig,
     mapping: indigoIndoSingleMapping,
     pdf: "/templates/indigo_indo_single.pdf", // Assuming pdf name
+  },
+  [tripIataSingleConfig.id]: {
+      config: tripIataSingleConfig,
+      mapping: tripIataSingleMapping,
+      pdf: "/templates/trip_iata_single.pdf",
+  },
+  [tripIataDoubleConfig.id]: {
+      config: tripIataDoubleConfig,
+      mapping: tripIataDoubleMapping,
+      pdf: "/templates/trip_iata_double.pdf",
   },
   [mmtSingleConfig.id]: {
     config: mmtSingleConfig,

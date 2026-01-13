@@ -56,3 +56,8 @@ export function formatIndigoIndonesiaPassengerName(name) {
 
   return trimmed;
 }
+
+export function formatIataPassengerName(name) {
+   const cleaned = name.trim().replace(/^(mr|mrs|ms|miss|dr)\.?\s+/i, "");
+    return cleaned.toUpperCase();
+}

@@ -7,6 +7,8 @@ export const COLORS = {
   semiDarkGrey: rgb(0.45, 0.45, 0.45),
   semiDarkerGrey: rgb(0.37, 0.37, 0.37),
   lightGrey: rgb(0.7, 0.7, 0.7),
-  backGroundGrey:rgb(251/255, 251/255, 251/255)
+  backGroundGrey:rgb(251/255, 251/255, 251/255),
+  lightBlue:rgb(0.23, 0.49, 1),
+ darkText:rgb(0.15, 0.15, 0.15)
 
 };
