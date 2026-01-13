@@ -4,10 +4,11 @@ export default function FlightDetailsForm({ form, handleChange, templateConfig }
   // Check if this is an MMT or Move template
   const isMMT = templateConfig?.id?.includes('mmt');
   const isTripIata = templateConfig?.id?.includes('trip_iata');
+  const isGoibibo = templateConfig?.id?.includes('goibibo');
   const isMove = templateConfig?.id?.includes('move_thailand') || templateConfig?.id?.includes('move_malaysia');
   const isCleartrip = templateConfig?.id?.includes('cleartrip');
   const isIndigoIndonesia = templateConfig?.id?.includes('indigo_indo');
-  const hideBookingTime = isMMT || isMove || isCleartrip || isIndigoIndonesia || isTripIata;
+  const hideBookingTime = isMMT || isMove || isCleartrip || isIndigoIndonesia || isTripIata||isGoibibo;
   const hideBookingDate = isIndigoIndonesia || isCleartrip || isTripIata;
   return (
     <div style={{ padding: 20, border: '1px solid #eee', borderRadius: 8, marginBottom: 20 }}>
@@ -40,7 +41,7 @@ export default function FlightDetailsForm({ form, handleChange, templateConfig }
           </label>
         )}
         
-        {(isMMT || isTripIata) && (
+        {(isMMT || isTripIata || isGoibibo) && (
             <label>
               Booking ID
               <input

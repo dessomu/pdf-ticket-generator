@@ -1,6 +1,6 @@
-import { splitName,cleanName } from "../utils/name";
+import { splitName,cleanName,formatToUpperCase } from "../utils/name";
 import { formatDate, formatFlightDate, formatJourneyDate,formatMMTJourneyDate,formatMMTFlightDate,formatMoveDayMonth,formatMoveFlightDate,formatMoveBookingDate,formatMoveBookingDate2,formatMoveFlightBriefDate2,formatMoveMalaysiaFlightBriefDate,formatCleartripFlightDate,formatIndigoIndonesiaDate,getNextDate } from "../utils/date";
-import { formatName,formatIndigoIndonesiaPassengerName,formatIataPassengerName } from "../utils/name";
+import { formatName,formatIndigoIndonesiaPassengerName,formatIataPassengerName, } from "../utils/name";
 
 /**
  * Maps form data to PDF fields for Indigo templates.
@@ -214,5 +214,54 @@ export function mapTripIataData(form, passengers, templateId = "") {
          pdfFields[`passengerName${suffix}`] = formatIataPassengerName(pax.passengerName);
          pdfFields[`ticketNumber${suffix}`] = form.pnr;
     });
+    return pdfFields;
+}
+
+// Maps form data to PDF fields for Goibibo templates.
+export function mapGoibiboData(form, passengers, templateId = "") {
+    const firstPax = passengers[0];
+
+    const nextDate = getNextDate(form.returnBoardingDate);
+
+    const pdfFields = {
+        bookingId: form.bookingId,
+        bookingDateString: `Flight booked on ${formatMoveDayMonth(form.bookingDate)}`,
+
+        greetingJourneyDate:formatMMTJourneyDate(form.departureBoardingDate),
+
+        departurePnr: form.pnr,
+        departurePnr_2: form.pnr,
+        returnPnr: form.pnr,
+        returnPnr_2: form.pnr,
+
+        departureTicketNumber: form.pnr,
+        departureTicketNumber_2: form.pnr,
+        returnTicketNumber: form.pnr,
+        returnTicketNumber_2: form.pnr,
+
+        departureTravellerName: formatToUpperCase(firstPax.passengerName),
+        departureTravellerType: "Adult",
+        departureTravellerName_2: formatToUpperCase(firstPax.passengerName),
+        departureTravellerType_2: "Adult",
+        returnTravellerName: formatToUpperCase(firstPax.passengerName),
+        returnTravellerType: "Adult",
+        returnTravellerName_2: formatToUpperCase(firstPax.passengerName),
+        returnTravellerType_2: "Adult",
+
+        departureDate: formatMMTFlightDate(form.departureBoardingDate),
+        returnDate: formatMMTFlightDate(form.returnBoardingDate),
+
+        departureBoardingDate: formatMMTJourneyDate(form.departureBoardingDate),
+        departureLandingDate: formatMMTJourneyDate(form.departureBoardingDate),
+        departureBoardingDate_2: formatMMTJourneyDate(form.departureBoardingDate),
+        departureLandingDate_2: formatMMTJourneyDate(form.departureBoardingDate),
+
+        returnBoardingDate: formatMMTJourneyDate(form.returnBoardingDate),
+        returnLandingDate: formatMMTJourneyDate(form.returnBoardingDate),
+        returnBoardingDate_2: formatMMTJourneyDate(form.returnBoardingDate),
+        returnLandingDate_2: formatMMTJourneyDate(nextDate),
+    };
+    
+
     return pdfFields;
 }

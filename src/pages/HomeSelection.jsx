@@ -33,6 +33,7 @@ export default function HomeSelection() {
             <option value="cleartrip">Cleartrip</option>
             <option value="indigo_indo">Indigo (Indo)</option>
             <option value="trip_iata">Trip (IATA)</option>
+            <option value="goibibo">Goibibo</option>
         </select>
 
         <h3>Number of Passengers</h3>

@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { TEMPLATE_REGISTRY } from "../templates"; // We need to fix this import path if TEMPLATE_REGISTRY isn't exported centrally yet
 import FlightDetailsForm from "../components/FlightDetailsForm";
 import PassengerDetailsForm from "../components/PassengerDetailsForm";
-import { mapIndigoData, mapMMTData, mapMoveData, mapCleartripData, mapIndigoIndoData, mapTripIataData } from "../templates/mappers";
+import { mapIndigoData, mapMMTData, mapMoveData, mapCleartripData, mapIndigoIndoData, mapTripIataData, mapGoibiboData } from "../templates/mappers";
 
 // Utils
 import { generatePdf } from "../utils/pdf";
@@ -107,6 +107,8 @@ export default function TicketFormPage() {
             pdfFields = mapIndigoIndoData(flightForm, passengers, templateId);
         } else if (templateId.includes('trip_iata')) {
             pdfFields = mapTripIataData(flightForm, passengers, templateId);
+        } else if (templateId.includes('goibibo')) {
+            pdfFields = mapGoibiboData(flightForm, passengers, templateId);
         } else {
             // Default to Indigo
             pdfFields = mapIndigoData(flightForm, passengers, templateId);

@@ -9,6 +9,11 @@ export const COLORS = {
   lightGrey: rgb(0.7, 0.7, 0.7),
   backGroundGrey:rgb(251/255, 251/255, 251/255),
   lightBlue:rgb(0.23, 0.49, 1),
- darkText:rgb(0.15, 0.15, 0.15)
+ darkText:rgb(0.15, 0.15, 0.15),
+ lightText:rgb(0.91, 0.91, 0.91),
+ greenBackground:rgb(0.078, 0.627, 0.373),
+ white:rgb(1, 1, 1),
+ goibiboBackground:rgb(247/255, 249/255, 254/255)
+
 
 };

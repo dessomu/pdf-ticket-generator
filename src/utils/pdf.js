@@ -3,13 +3,13 @@
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { drawDebugGrid } from "../templates/checkerBoxCreator";
 
-function drawWhiteRect(page, { x, y, width, height }) {
+function drawWhiteRect(page, { x, y, width, height,color }) {
   page.drawRectangle({
     x,
     y,
     width,
     height,
-    color: rgb(1, 1, 1),
+    color:color || rgb(1, 1, 1),
   });
 }
 
@@ -60,7 +60,7 @@ const textWidth = regularFont.widthOfTextAtSize(value, pos.fontSize);
       y: pos.y - 2,
       width: pos.width + 2,
       height: pos.height + 2,
-      color:pos.backGround || rgb(1, 1, 1),
+      color:pos.backGround?pos.backGround : rgb(1, 1, 1),
     });
 
     // 2. Draw new text

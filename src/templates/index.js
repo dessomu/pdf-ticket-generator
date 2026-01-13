@@ -21,6 +21,11 @@ import {
 } from "./trip_iata_double";
 
 import {
+  config as goibiboSingleConfig,
+  mapping as goibiboSingleMapping,
+} from "./goibibo_single";
+
+import {
   config as mmtSingleConfig,
   mapping as mmtSingleMapping,
 } from "./mmt_malaysia_single";
@@ -81,6 +86,11 @@ export const TEMPLATE_REGISTRY = {
       config: tripIataDoubleConfig,
       mapping: tripIataDoubleMapping,
       pdf: "/templates/trip_iata_double.pdf",
+  },
+  [goibiboSingleConfig.id]: {
+      config: goibiboSingleConfig,
+      mapping: goibiboSingleMapping,
+      pdf: "/templates/goibibo_single.pdf",
   },
   [mmtSingleConfig.id]: {
     config: mmtSingleConfig,
