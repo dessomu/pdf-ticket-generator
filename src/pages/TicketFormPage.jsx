@@ -33,11 +33,11 @@ export default function TicketFormPage() {
     pdfName: "",
     
     departureBoardingDate: "",
-    departureLandingDate: "",
+
     departureFlightNo: "",
     
     returnBoardingDate: "",
-    returnLandingDate: "",
+
     returnFlightNo: "",
     
     barcodeExtra: "",
@@ -230,7 +230,7 @@ export default function TicketFormPage() {
             pnr: "",
             pdfName: "",
             departureBoardingDate: "",
-            departureLandingDate: "",
+
             
             // Respect defaults on reset
             departureFlightNo: template?.config?.defaults?.departureFlightNo || "",
@@ -238,7 +238,7 @@ export default function TicketFormPage() {
             barcodeExtra: template?.config?.defaults?.barcodeExtra || "",
             
             returnBoardingDate: "",
-            returnLandingDate: "",
+
             bookingId: "",
             tripId: "",
         });

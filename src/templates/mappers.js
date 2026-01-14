@@ -54,9 +54,9 @@ export function mapMMTData(form, passengers, templateId = "") {
         
         // Common flight details (same for all passengers)
         departureBoardingDate: formatMMTJourneyDate(form.departureBoardingDate),
-        departureLandingDate: formatMMTJourneyDate(form.departureLandingDate),
+        departureLandingDate: formatMMTJourneyDate(form.departureBoardingDate),
         returnBoardingDate: formatMMTJourneyDate(form.returnBoardingDate),
-        returnLandingDate: formatMMTJourneyDate(form.returnLandingDate),
+        returnLandingDate: formatMMTJourneyDate(form.returnBoardingDate),
         
         departureDate: formatMMTFlightDate(form.departureBoardingDate),
         returnDate: formatMMTFlightDate(form.returnBoardingDate),
