@@ -18,7 +18,7 @@ export function buildBarcodeText({
   if (format === "cleartrip") {
     // Cleartrip format: M1SURENAME/NAME PNRFLIGHTNO DESTINATIONJOURNEYDATE
     // Example: M1DOE/JOHN ABC123FD121 DMK15JAN26
-    return `M1${surname}/${name} ${pnr}${flightNo}${source}${destination}${journeyDate}`;
+    return `M1${surname}/${name} ${pnr}${flightNo} ${source}${destination}${journeyDate}`;
   }
 
   // Standard format with optional suffix

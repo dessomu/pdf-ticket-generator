@@ -20,8 +20,8 @@ const mapping = {
     returnLandingDate: { x: 50.5, y: 343, fontSize: 9, font: "regular",color:COLORS.semiDarkGrey,pageIndex:1, width: 40, height: 10 },
     
     // Passenger Name
-    passengerName: { x: 53, y: 452, fontSize: 11.3, font: "regular", width: 200, height: 12 },
-    passengerType:{x:260,y:452,fontSize:10,font:"regular",color:COLORS.grey,width:60,height:16},
+    passengerName: { x: 53, y: 451, fontSize: 11.5, font: "regular", width: 200, height: 12 },
+    passengerType:{x:260,y:451,fontSize:11,font:"regular",color:COLORS.grey,width:60,height:16},
 
     boardingPassengerName: { x: 48, y: 220, fontSize: 10, font: "regular",color:COLORS.grey,pageIndex:1, width: 200, height: 12 },
     returningPassengerName: { x: 51, y: 112, fontSize: 10, font: "regular",color:COLORS.grey,pageIndex:1, width: 200, height: 12 },

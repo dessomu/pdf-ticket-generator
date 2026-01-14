@@ -76,7 +76,7 @@ export function formatMMTFlightDate(dateInput) {
     year: "numeric",
   }).format(date);
 
-  return `${weekday},${day} ${month} ${year}`;
+  return `${weekday}, ${day} ${month} ${year}`;
 }
 
 // Returns date in format "19 Sep"

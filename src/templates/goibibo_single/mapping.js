@@ -5,7 +5,7 @@ const mapping = {
     bookingId: { x: 449, y: 754, fontSize: 8, font: "regular",color: COLORS.grey, width: 94.5, height: 8 },
     bookingDateString: { x: 454.5, y: 742, fontSize: 7.5, font: "regular",color: COLORS.lightGrey, width: 90, height: 10 },
     greetingJourneyDate: { x: 157, y: 677.5, fontSize: 12, font: "regular",backGround: COLORS.greenBackground, color: COLORS.lightText, width: 80, height: 12 },
-
+    greetingWish: { x: 141, y: 665.5, fontSize: 9, font: "regular",backGround: COLORS.greenBackground, color: COLORS.lightText, width: 360, height: 10 },
     // Departure Section - PNR & Ticket
     departurePnr: { x: 140, y: 412, fontSize: 10, font: "regular",color: COLORS.darkGrey, width: 50, height: 12 },
     departurePnr_2: { x: 140, y: 48, fontSize: 10, font: "regular",color: COLORS.darkGrey, width: 50, height: 12 },

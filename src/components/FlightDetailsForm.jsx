@@ -95,7 +95,7 @@ export default function FlightDetailsForm({ form, handleChange, templateConfig }
                     onChange={handleChange}
                     />
                 </div>
-                {!hideDepartureFlightNo && (
+                {/* {!hideDepartureFlightNo && (
                 <div className="input-group">
                     <label className="input-label">Departure Flight No.</label>
                     <input
@@ -105,7 +105,7 @@ export default function FlightDetailsForm({ form, handleChange, templateConfig }
                     onChange={handleChange}
                     />
                 </div>
-                )}
+                )} */}
             </div>
           </div>
 
@@ -121,7 +121,7 @@ export default function FlightDetailsForm({ form, handleChange, templateConfig }
                     onChange={handleChange}
                     />
                 </div>
-                {!hideReturnFlightNo && (
+                {/* {!hideReturnFlightNo && (
                 <div className="input-group">
                     <label className="input-label">Return Flight No.</label>
                     <input
@@ -131,11 +131,11 @@ export default function FlightDetailsForm({ form, handleChange, templateConfig }
                     onChange={handleChange}
                     />
                 </div>
-                )}
+                )} */}
              </div>
           </div>
       </div>
-
+{/* 
       { templateConfig?.barcode?.enabled && !hideBarcodeExtra && (
         <>
             <hr style={{ margin: '20px 0', borderColor: '#444' }} />
@@ -150,7 +150,7 @@ export default function FlightDetailsForm({ form, handleChange, templateConfig }
                 />
             </div>
         </>
-      )}
+      )} */}
     </div>
   );
 }

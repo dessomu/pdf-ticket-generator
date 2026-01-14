@@ -229,6 +229,7 @@ export function mapGoibiboData(form, passengers, templateId = "") {
         bookingDateString: `Flight booked on ${formatMoveDayMonth(form.bookingDate)}`,
 
         greetingJourneyDate:formatMMTJourneyDate(form.departureBoardingDate),
+        greetingWish: "Thank you for booking with us. We wish you a pleasant journey!",
 
         departurePnr: form.pnr,
         departurePnr_2: form.pnr,
