@@ -19,8 +19,8 @@ const mapping = {
     ticketNumber:{ x: 475, y: 520, fontSize: 10, font: "regular", width: 60, height: 14 },
   },
   barcodes: {
-    departure: { x: 151.5, y: 519.7, width: 75, height: 22.5 },
-    return: { x: 152.5, y: 490, width: 74, height: 22 },
+    departure: { x: 151.5, y: 519.7, width: 79, height: 24 },
+    return: { x: 152, y: 490, width: 75, height: 22.7 },
   },
 };
 
