@@ -253,10 +253,10 @@ export default function TicketFormPage() {
   };
 
   return (
-    <div style={{ maxWidth: 800, margin: "40px auto", fontFamily: "sans-serif" }}>
-        <button onClick={() => navigate('/')} style={{ marginBottom: 20, cursor: 'pointer' }}>&larr; Back to Home</button>
+    <div className="container">
+        <button onClick={() => navigate('/')} className="mb-4 outline">&larr; Back to Home</button>
         
-        <h2>{family.toUpperCase()} - {paxCount} Passenger{paxCount > 1 ? 's' : ''}</h2>
+        <h2 className="mb-4">{family.toUpperCase()} - {paxCount} Passenger{paxCount > 1 ? 's' : ''}</h2>
         
         {/* Flight Details (Shared) */}
         <FlightDetailsForm 
@@ -265,12 +265,13 @@ export default function TicketFormPage() {
             templateConfig={template?.config}
         />
         
-        <div style={{ margin: '10px 0' }}>
-            <label style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
+        <div className="mb-4">
+            <label className="flex" style={{ cursor: 'pointer' }}>
                 <input 
                     type="checkbox" 
                     checked={showGrid} 
                     onChange={e => setShowGrid(e.target.checked)} 
+                    style={{ width: 'auto' }}
                 />
                 Show Debug Grid in PDF (for aligning coordinates)
             </label>
@@ -290,15 +291,10 @@ export default function TicketFormPage() {
         <button 
             onClick={handleGenerate} 
             disabled={loading}
+            className="w-full primary"
             style={{
-                width: '100%',
                 padding: 15,
-                backgroundColor: '#007bff',
-                color: 'white',
-                border: 'none',
-                borderRadius: 8,
                 fontSize: 18,
-                cursor: 'pointer'
             }}
         >
             {loading ? "Generating..." : "Generate PDF"}

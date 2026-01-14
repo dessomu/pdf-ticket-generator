@@ -16,15 +16,15 @@ export default function HomeSelection() {
   };
 
   return (
-    <div style={{ maxWidth: 600, margin: "40px auto", fontFamily: "sans-serif", textAlign: "center" }}>
-      <h1>PDF Ticket Generator</h1>
+    <div className="container text-center">
+      <h1 className="mb-4">PDF Ticket Generator</h1>
       
-      <div style={{ margin: "20px 0", border: '1px solid #ccc', padding: 20, borderRadius: 8 }}>
+      <div className="card text-center">
         <h3>Select Ticket Type</h3>
         <select 
             value={selectedTemplate}
             onChange={(e) => setSelectedTemplate(e.target.value)}
-            style={{ padding: 10, fontSize: 16, width: "100%", marginBottom: 20 }}
+            className="w-full mb-4"
         >
             <option value="mmt_malaysia">Make My Trip</option>
             <option value="move_thailand">Move (Thai)</option>
@@ -37,20 +37,12 @@ export default function HomeSelection() {
         </select>
 
         <h3>Number of Passengers</h3>
-        <div style={{ display: "flex", gap: 10, justifyContent: "center" }}>
+        <div className="btn-group">
             {[1, 2, 3].map(num => (
                 <button 
                     key={num}
                     onClick={() => setPaxCount(num)}
-                    style={{
-                        padding: "10px 20px",
-                        fontSize: 16,
-                        backgroundColor: paxCount === num ? "#007bff" : "#f0f0f0",
-                        color: paxCount === num ? "white" : "black",
-                        border: "none",
-                        borderRadius: 4,
-                        cursor: "pointer"
-                    }}
+                    className={paxCount === num ? "secondary" : "outline"}
                 >
                     {num} Passenger{num > 1 ? 's' : ''}
                 </button>
@@ -60,16 +52,8 @@ export default function HomeSelection() {
 
       <button 
         onClick={handleProceed}
-        style={{
-            marginTop: 20,
-            padding: "15px 30px",
-            fontSize: 18,
-            backgroundColor: "#28a745",
-            color: "white",
-            border: "none",
-            borderRadius: 8,
-            cursor: "pointer"
-        }}
+        className="primary mt-4"
+        style={{ fontSize: '1.2em', padding: '15px 30px' }}
       >
         Proceed to Data Entry
       </button>

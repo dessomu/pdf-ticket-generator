@@ -9,6 +9,7 @@ export function mapIndigoData(form, passengers, templateId = "") {
     const firstPax = passengers[0];
     const { surname, firstName } = splitName(firstPax.passengerName); // While not strictly used in fields, useful reference
 
+    const nextDate = getNextDate(form.departureBoardingDate);
     // Base PDF Fields
     const pdfFields = {
         bookingTimeString: `* Date of Booking ${formatDate(form.bookingDate)}, ${form.bookingTime} `,
@@ -17,9 +18,9 @@ export function mapIndigoData(form, passengers, templateId = "") {
         
         // Flight Dates
         departureBoardingDate: `23:30 hrs, ${formatJourneyDate(form.departureBoardingDate)}`,
-        departureLandingDate: `03:45 hrs, ${formatJourneyDate(form.departureLandingDate)}`,
+        departureLandingDate: `03:45 hrs, ${formatJourneyDate(nextDate)}`,
         returnBoardingDate: `06:45 hrs, ${formatJourneyDate(form.returnBoardingDate)}`,
-        returnLandingDate: `08:00 hrs, ${formatJourneyDate(form.returnLandingDate)}`,
+        returnLandingDate: `08:00 hrs, ${formatJourneyDate(form.returnBoardingDate)}`,
         
         departureFlightNo: `${form.departureFlightNo}`,
         departureDate: formatFlightDate(form.departureBoardingDate),
@@ -28,7 +29,7 @@ export function mapIndigoData(form, passengers, templateId = "") {
         returnDate: formatFlightDate(form.returnBoardingDate),
         
         // Pax 1
-        passengerName: formatName(firstPax.passengerName), 
+        passengerName: formatToUpperCase(firstPax.passengerName), 
     };
 
     // Add additional passengers dynamically

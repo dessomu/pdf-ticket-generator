@@ -1,4 +1,5 @@
 import React from 'react';
+import { TEMPLATE_REGISTRY } from "../templates"; // Ensure this is imported if needed, though not used directly in snippet logic
 
 export default function FlightDetailsForm({ form, handleChange, templateConfig }) {
   // Check if this is an MMT or Move template
@@ -11,167 +12,150 @@ export default function FlightDetailsForm({ form, handleChange, templateConfig }
   const hideBookingTime = isMMT || isMove || isCleartrip || isIndigoIndonesia || isTripIata||isGoibibo;
   const hideBookingDate = isIndigoIndonesia || isCleartrip || isTripIata;
   return (
-    <div style={{ padding: 20, border: '1px solid #eee', borderRadius: 8, marginBottom: 20 }}>
+    <div className="card">
       <h4>Booking Information</h4>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+      <div className="grid-2">
         {!hideBookingDate && (
-         <label>
-           Booking Date
+         <div className="input-group">
+           <label className="input-label">Booking Date</label>
             <input
             type="date"
             name="bookingDate"
             value={form.bookingDate}
             onChange={handleChange}
-            style={{ width: '100%' }}
             />
-         </label>
+         </div>
         ) }
        
 
         {!hideBookingTime && (
-          <label>
-            Booking Time
+          <div className="input-group">
+            <label className="input-label">Booking Time</label>
             <input
               type="time"
               name="bookingTime"
               value={form.bookingTime}
               onChange={handleChange}
-               style={{ width: '100%' }}
             />
-          </label>
+          </div>
         )}
         
         {(isMMT || isTripIata || isGoibibo) && (
-            <label>
-              Booking ID
+            <div className="input-group">
+              <label className="input-label">Booking ID</label>
               <input
                 name="bookingId"
                 value={form.bookingId || ''}
                 onChange={handleChange}
-                style={{ width: '100%' }}
               />
-            </label>
+            </div>
         )}
 
         {isCleartrip && (
-            <label>
-              Trip ID
+            <div className="input-group">
+              <label className="input-label">Trip ID</label>
               <input
                 name="tripId"
                 value={form.tripId || ''}
                 onChange={handleChange}
-                style={{ width: '100%' }}
               />
-            </label>
+            </div>
         )}
       </div>
 
-      <div style={{ marginTop: 10, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10  }}>
-        <label>
-            PNR
-            <input name="pnr" value={form.pnr} onChange={handleChange} style={{ width: '100%' }} />
-        </label>
+      <div className="grid-2 mt-4">
+        <div className="input-group">
+            <label className="input-label">PNR</label>
+            <input name="pnr" value={form.pnr} onChange={handleChange} />
+        </div>
         
       </div>
       
-       <div style={{ marginTop: 10 }}>
-         <label>
-            PDF Filename
-            <input name="pdfName" value={form.pdfName} onChange={handleChange} style={{ width: '100%' }} />
-         </label>
+       <div className="input-group mt-4">
+         <label className="input-label">PDF Filename</label>
+         <input name="pdfName" value={form.pdfName} onChange={handleChange} />
        </div>
 
-      <hr style={{ margin: '20px 0' }} />
+      <hr style={{ margin: '20px 0', borderColor: '#444' }} />
 
       <h4>Departure Flight</h4>
-       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-          <label>
-            Boarding Date
+       <div className="grid-2">
+          <div className="input-group">
+            <label className="input-label">Boarding Date</label>
             <input
               type="date"
               name="departureBoardingDate"
               value={form.departureBoardingDate}
               onChange={handleChange}
-               style={{ width: '100%' }}
             />
-          </label>
+          </div>
 
-          <label>
-            Landing Date
+          <div className="input-group">
+            <label className="input-label">Landing Date</label>
             <input
               type="date"
               name="departureLandingDate"
               value={form.departureLandingDate}
               onChange={handleChange}
-               style={{ width: '100%' }}
             />
-          </label>
+          </div>
       </div>
-      <div style={{ marginTop: 10 }}>
-        <label>
-            Departure Flight No.
-            <input
-            name="departureFlightNo"
-            placeholder="e.g. 6E1054 (A320) "
-            value={form.departureFlightNo}
-            onChange={handleChange}
-             style={{ width: '100%' }}
-            />
-        </label>
+      <div className="input-group mt-4">
+        <label className="input-label">Departure Flight No.</label>
+        <input
+        name="departureFlightNo"
+        placeholder="e.g. 6E1054 (A320) "
+        value={form.departureFlightNo}
+        onChange={handleChange}
+        />
       </div>
 
-      <hr style={{ margin: '20px 0' }} />
+      <hr style={{ margin: '20px 0', borderColor: '#444' }} />
 
       <h4>Return Flight</h4>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-          <label>
-            Boarding Date
+      <div className="grid-2">
+          <div className="input-group">
+            <label className="input-label">Boarding Date</label>
             <input
               type="date"
               name="returnBoardingDate"
               value={form.returnBoardingDate}
               onChange={handleChange}
-               style={{ width: '100%' }}
             />
-          </label>
+          </div>
 
-          <label>
-            Landing Date
+          <div className="input-group">
+            <label className="input-label">Landing Date</label>
             <input
               type="date"
               name="returnLandingDate"
               value={form.returnLandingDate}
               onChange={handleChange}
-               style={{ width: '100%' }}
             />
-          </label>
+          </div>
       </div>
-       <div style={{ marginTop: 10 }}>
-        <label>
-            Return Flight No.
-            <input
-            name="returnFlightNo"
-            placeholder="e.g. 6E1057 (A320) "
-            value={form.returnFlightNo}
-            onChange={handleChange}
-             style={{ width: '100%' }}
-            />
-        </label>
+       <div className="input-group mt-4">
+        <label className="input-label">Return Flight No.</label>
+        <input
+        name="returnFlightNo"
+        placeholder="e.g. 6E1057 (A320) "
+        value={form.returnFlightNo}
+        onChange={handleChange}
+        />
       </div>
 
       { templateConfig?.barcode?.enabled && (
         <>
-            <hr style={{ margin: '20px 0' }} />
-            <label>
-                Barcode Extra String
+            <hr style={{ margin: '20px 0', borderColor: '#444' }} />
+            <div className="input-group">
+                <label className="input-label">Barcode Extra String</label>
                 <input
                 name="barcodeExtra"
                 placeholder="e.g. 0000311Y000Y00000 009BXTOBCP5DBTQ"
                 value={form.barcodeExtra}
                 onChange={handleChange}
-                 style={{ width: '100%' }}
                 />
-            </label>
+            </div>
         </>
       )}
     </div>
